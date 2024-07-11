@@ -1,0 +1,13 @@
+query GetProductVariants($productId: ID!) {
+	node(id: $productId) {
+		... on Product {
+			variants(first: 5) {
+				edges {
+					node {
+						id
+					}
+				}
+			}
+		}
+	}
+}
