@@ -9,5 +9,9 @@ mutation AddToCart($cartId: ID!, $products: [CartLineInput!]!) {
 				}
 			}
 		}
+		userErrors {
+			field
+			message
+		}
 	}
 }

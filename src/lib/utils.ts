@@ -30,3 +30,7 @@ export const handleClientResponse = <T>({ errors, data }: ClientResponse<T>) => 
 
 	return data as T;
 };
+
+export const formatPrice = (price: string) => {
+	return parseFloat(price).toFixed(2).replace('.', ',') + ' €';
+};

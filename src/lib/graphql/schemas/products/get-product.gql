@@ -3,5 +3,43 @@ query GetProduct($id: ID!) {
 		id
 		title
 		description
+		totalInventory
+		priceRange {
+			maxVariantPrice {
+				amount
+			}
+			minVariantPrice {
+				amount
+			}
+		}
+		variants(first: 10) {
+			edges {
+				node {
+					id
+					title
+					priceV2 {
+						amount
+					}
+					availableForSale
+					selectedOptions {
+						name
+						value
+					}
+					product {
+						id
+						title
+						description
+						images(first: 10) {
+							edges {
+								node {
+									originalSrc
+									altText
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }

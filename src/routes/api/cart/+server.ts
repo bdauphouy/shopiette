@@ -1,8 +1,9 @@
-import { error, json, type RequestHandler } from '@sveltejs/kit';
 import { client } from '$lib/graphql/client';
-import { gql, handleClientResponse } from '$lib/utils';
-import GetCart from '$lib/graphql/schemas/cart/get-cart.gql';
 import AddToCart from '$lib/graphql/schemas/cart/add-to-cart.gql';
+import GetCart from '$lib/graphql/schemas/cart/get-cart.gql';
+import type { UserError } from '$lib/types';
+import { gql, handleClientResponse } from '$lib/utils';
+import { error, json, type RequestHandler } from '@sveltejs/kit';
 
 interface Node {
 	node: {
@@ -47,6 +48,7 @@ interface PostData {
 				};
 			};
 		};
+		userErrors: UserError[];
 	};
 }
 
@@ -61,7 +63,10 @@ export const GET: RequestHandler = async ({ url }) => {
 		})
 	);
 
-	return json(data.cart);
+	return json({
+		...data.cart,
+		lines: data.cart.lines.edges.map(({ node }) => node)
+	});
 };
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -83,5 +88,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		})
 	);
 
-	return json(data.cartLinesAdd.cart);
+	return json({
+		...data.cartLinesAdd.cart,
+		userErrors: data.cartLinesAdd.userErrors
+	});
 };

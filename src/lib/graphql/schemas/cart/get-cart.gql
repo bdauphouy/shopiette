@@ -7,19 +7,30 @@ query GetCart($id: ID!) {
 				amount
 			}
 		}
-		lines(first: 10) {
+		lines(first: 50) {
 			edges {
 				node {
 					id
+					quantity
 					merchandise {
 						... on ProductVariant {
 							id
 							title
+							availableForSale
+							priceV2 {
+								amount
+							}
 							product {
 								id
 								title
-								featuredImage {
-									url
+								description
+								images(first: 1) {
+									edges {
+										node {
+											originalSrc
+											altText
+										}
+									}
 								}
 							}
 						}

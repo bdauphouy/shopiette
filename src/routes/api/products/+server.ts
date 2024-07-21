@@ -1,18 +1,11 @@
-import { json, type RequestHandler } from '@sveltejs/kit';
 import { client } from '$lib/graphql/client';
-import { gql, handleClientResponse } from '$lib/utils';
 import GetProducts from '$lib/graphql/schemas/products/get-products.gql';
+import type { Product } from '$lib/types';
+import { gql, handleClientResponse } from '$lib/utils';
+import { json, type RequestHandler } from '@sveltejs/kit';
 
 interface Node {
-	node: {
-		id: string;
-		title: string;
-		description: string;
-		totalInventory: number;
-		featuredImage: {
-			url: string;
-		};
-	};
+	node: Product;
 }
 
 interface Data {
