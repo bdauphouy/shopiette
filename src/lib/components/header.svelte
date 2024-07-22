@@ -12,7 +12,7 @@
 	<h1 class="text-xl font-bold"><a href="/">My store</a></h1>
 
 	{#if $cart?.checkoutUrl}
-		<a class="text-2xl font-bold relative" href={$cart.checkoutUrl}>
+		<a class="text-2xl font-bold relative" href="/cart">
 			<Icon icon="solar:cart-large-minimalistic-outline" />
 			{#if $cart?.quantity}
 				<span

@@ -3,6 +3,7 @@
 	import Button from '$lib/components/button.svelte';
 	import type { Cart as TCart, UserError } from '$lib/types';
 	import { formatPrice } from '$lib/utils';
+	import Cookies from 'js-cookie';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import type { PageData } from './$types';
@@ -41,7 +42,7 @@
 
 		cart.set(newCart);
 
-		localStorage.setItem('cart', JSON.stringify(newCart));
+		Cookies.set('cart', JSON.stringify(newCart), { expires: 7 });
 	};
 
 	$: variants = data.product.variants;

@@ -4,13 +4,14 @@
 	import { Cart } from '$lib/api/cart';
 	import Header from '$lib/components/header.svelte';
 	import type { Cart as TCart } from '$lib/types';
+	import Cookies from 'js-cookie';
 	import { onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 
 	let cart = writable<TCart | null>(null);
 
 	const handleCartCreate = async () => {
-		const lsCart = localStorage.getItem('cart');
+		const lsCart = Cookies.get('cart');
 
 		if (lsCart) {
 			cart.set(JSON.parse(lsCart));
@@ -20,7 +21,7 @@
 
 		cart.set(await Cart.create());
 
-		localStorage.setItem('cart', JSON.stringify($cart));
+		Cookies.set('cart', JSON.stringify($cart), { expires: 7 });
 	};
 
 	onMount(() => {
