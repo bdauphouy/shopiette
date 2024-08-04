@@ -9,6 +9,7 @@
 	import { writable } from 'svelte/store';
 
 	let cart = writable<TCart | null>(null);
+	let accessToken = writable<string | null>(null);
 
 	const handleCartCreate = async () => {
 		const lsCart = Cookies.get('cart');
@@ -24,11 +25,21 @@
 		Cookies.set('cart', JSON.stringify($cart), { expires: 7 });
 	};
 
+	const handleAccessToken = () => {
+		const at = Cookies.get('accessToken');
+
+		if (at) {
+			accessToken.set(at);
+		}
+	};
+
 	onMount(() => {
 		handleCartCreate();
+		handleAccessToken();
 	});
 
 	setContext('cart', cart);
+	setContext('accessToken', accessToken);
 </script>
 
 <Header />

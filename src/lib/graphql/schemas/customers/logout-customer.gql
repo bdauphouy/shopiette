@@ -1,0 +1,10 @@
+mutation LogoutCustomer($accessToken: String!) {
+	customerAccessTokenDelete(customerAccessToken: $accessToken) {
+		deletedAccessToken
+		deletedCustomerAccessTokenId
+		userErrors {
+			field
+			message
+		}
+	}
+}
