@@ -69,3 +69,7 @@ export type Customer = {
 	lastName: string;
 	email: string;
 };
+
+export type Shop = {
+	name: string;
+};

@@ -7,6 +7,9 @@
 	import Cookies from 'js-cookie';
 	import { onMount, setContext } from 'svelte';
 	import { writable } from 'svelte/store';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	let cart = writable<TCart | null>(null);
 	let accessToken = writable<string | null>(null);
@@ -42,7 +45,7 @@
 	setContext('accessToken', accessToken);
 </script>
 
-<Header />
+<Header shop={data.shop} />
 
 <main class="px-40 py-10">
 	<slot />
