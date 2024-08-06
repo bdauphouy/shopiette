@@ -1,6 +1,6 @@
 import { client } from '$lib/graphql/client';
 import GetProduct from '$lib/graphql/schemas/products/get-product.gql';
-import type { ProductVariant } from '$lib/types';
+import type { Image, Price, ProductVariant } from '$lib/types';
 import { gql, handleClientResponse } from '$lib/utils';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
@@ -14,13 +14,10 @@ interface Data {
 		title: string;
 		description: string;
 		totalInventory: number;
+		featuredImage: Image;
 		priceRange: {
-			maxVariantPrice: {
-				amount: string;
-			};
-			minVariantPrice: {
-				amount: string;
-			};
+			maxVariantPrice: Price;
+			minVariantPrice: Price;
 		};
 		variants: {
 			edges: Node[];

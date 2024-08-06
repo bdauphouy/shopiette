@@ -44,6 +44,6 @@
 
 <Header />
 
-<main class="px-20 py-10">
+<main class="px-40 py-10">
 	<slot />
 </main>

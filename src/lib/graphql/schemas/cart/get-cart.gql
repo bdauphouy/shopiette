@@ -17,8 +17,19 @@ query GetCart($id: ID!) {
 							id
 							title
 							availableForSale
-							priceV2 {
+							compareAtPrice {
 								amount
+							}
+							price {
+								amount
+							}
+							selectedOptions {
+								name
+								value
+							}
+							image {
+								originalSrc
+								altText
 							}
 							product {
 								id

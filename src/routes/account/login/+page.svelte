@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { Cart } from '$lib/api/cart';
 	import { Customer } from '$lib/api/customer';
-	import type { UserError } from '$lib/types';
+	import type { Cart as TCart, UserError } from '$lib/types';
 	import Cookies from 'js-cookie';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 
+	let cart = getContext<Writable<TCart | null>>('cart');
 	let accessToken = getContext<Writable<string | null>>('accessToken');
 
-	let cartErrors: UserError[] = [];
+	let loginErrors: UserError[] = [];
 
 	const handleLogin = async (e: SubmitEvent) => {
 		e.preventDefault();
@@ -21,21 +23,26 @@
 			password: string;
 		};
 
-		const { accessToken: at, userErrors } = await Customer.login(customerData);
+		const { accessToken: token, userErrors } = await Customer.login(customerData);
 
 		if (userErrors.length > 0) {
-			cartErrors = userErrors;
+			loginErrors = userErrors;
 
 			return;
 		}
 
-		accessToken.set(at);
+		await Cart.updateBuyer({
+			cartId: $cart?.id || '',
+			customerAccessToken: token
+		});
 
-		Cookies.set('accessToken', at, { expires: 7 });
+		accessToken.set(token);
+
+		Cookies.set('accessToken', token, { expires: 7 });
 
 		goto('/');
 
-		cartErrors = [];
+		loginErrors = [];
 	};
 </script>
 
@@ -44,9 +51,9 @@
 	<input name="password" type="password" placeholder="Password" />
 
 	<button>submit</button>
-	{#if cartErrors.length > 0}
+	{#if loginErrors.length > 0}
 		<ul class="text-md text-red-500 flex flex-col gap-2">
-			{#each cartErrors as error}
+			{#each loginErrors as error}
 				<li>{error.message}</li>
 			{/each}
 		</ul>

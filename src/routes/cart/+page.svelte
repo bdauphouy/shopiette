@@ -30,11 +30,12 @@
 		</thead>
 		<tbody>
 			{#each data.cart.lines as line, i}
+				{@const isVariant = line.merchandise.title !== 'Default Title'}
 				<CartLine
 					background={i % 2 === 0 ? 'white' : 'gray'}
-					title={line.merchandise.product.title}
+					title="{line.merchandise.product.title} {isVariant ? `(${line.merchandise.title})` : ''}"
 					quantity={line.quantity}
-					price={line.merchandise.priceV2.amount}
+					price={line.merchandise.price.amount}
 				/>
 			{/each}
 		</tbody>

@@ -2,7 +2,7 @@
 	import { Customer } from '$lib/api/customer';
 	import type { UserError } from '$lib/types';
 
-	let cartErrors: UserError[] = [];
+	let signupErrors: UserError[] = [];
 
 	const handleSignup = async (e: SubmitEvent) => {
 		e.preventDefault();
@@ -20,14 +20,12 @@
 		const { customer, userErrors } = await Customer.create(customerData);
 
 		if (userErrors.length > 0) {
-			cartErrors = userErrors;
+			signupErrors = userErrors;
 
 			return;
 		}
 
-		console.log(customer);
-
-		cartErrors = [];
+		signupErrors = [];
 	};
 </script>
 
@@ -38,9 +36,9 @@
 	<input name="password" type="password" placeholder="Password" />
 
 	<button>submit</button>
-	{#if cartErrors.length > 0}
+	{#if signupErrors.length > 0}
 		<ul class="text-md text-red-500 flex flex-col gap-2">
-			{#each cartErrors as error}
+			{#each signupErrors as error}
 				<li>{error.message}</li>
 			{/each}
 		</ul>

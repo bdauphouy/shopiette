@@ -8,7 +8,7 @@
 	const cart = getContext<Writable<TCart | null>>('cart');
 </script>
 
-<header class="flex justify-between px-20 py-10">
+<header class="flex justify-between px-40 py-10">
 	<h1 class="text-xl font-bold"><a href="/">My store</a></h1>
 
 	<ul class="text-2xl font-bold flex gap-4 items-center">

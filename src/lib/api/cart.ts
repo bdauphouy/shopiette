@@ -1,4 +1,4 @@
-import type { CartItem } from '$lib/types';
+import type { CartItem, Price } from '$lib/types';
 import { Api } from './api';
 
 interface GetProps {
@@ -16,13 +16,16 @@ interface AddProps {
 	quantity: number;
 }
 
+interface UpdateBuyerProps {
+	cartId: string;
+	customerAccessToken: string;
+}
+
 export class Cart {
 	static async get({ id }: GetProps): Promise<
 		Cart & {
 			cost: {
-				totalAmount: {
-					amount: string;
-				};
+				totalAmount: Price;
 			};
 			lines: CartItem[];
 		}
@@ -39,6 +42,13 @@ export class Cart {
 			cartId,
 			productVariantId,
 			quantity
+		});
+	}
+
+	static async updateBuyer({ cartId, customerAccessToken }: UpdateBuyerProps) {
+		return Api.post('/cart/update-buyer', {
+			cartId,
+			customerAccessToken
 		});
 	}
 }

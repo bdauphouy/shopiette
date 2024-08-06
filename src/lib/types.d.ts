@@ -3,16 +3,10 @@ export type Product = {
 	title: string;
 	description: string;
 	totalInventory: number;
-	featuredImage: {
-		url: string;
-	};
+	featuredImage: Image;
 	priceRange: {
-		maxVariantPrice: {
-			amount: string;
-		};
-		minVariantPrice: {
-			amount: string;
-		};
+		maxVariantPrice: Price;
+		minVariantPrice: Price;
 	};
 	variants: ProductVariant[];
 };
@@ -21,9 +15,7 @@ export type Cart = {
 	id: string;
 	checkoutUrl: string;
 	cost?: {
-		totalAmount: {
-			amount: string;
-		};
+		totalAmount: Price;
 	};
 	quantity?: number;
 };
@@ -39,17 +31,21 @@ export type Image = {
 	altText: string;
 };
 
+export type Price = {
+	amount: string;
+};
+
 export type ProductVariant = {
 	id: string;
 	title: string;
 	availableForSale: boolean;
-	priceV2: {
-		amount: string;
-	};
+	compareAtPrice: Price;
+	price: Price;
 	selectedOptions: {
 		name: string;
 		value: string;
 	}[];
+	image: Image;
 	product: {
 		id: string;
 		title: string;

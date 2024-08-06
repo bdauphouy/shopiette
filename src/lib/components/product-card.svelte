@@ -11,7 +11,7 @@
 <a href="/product?id={id}">
 	<div>
 		{#if featuredImage}
-			<img src={featuredImage.url} alt={title} />
+			<img src={featuredImage.originalSrc} alt={title} />
 		{/if}
 	</div>
 	<div class="py-4 flex flex-col gap-1">

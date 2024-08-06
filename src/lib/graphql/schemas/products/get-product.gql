@@ -4,6 +4,10 @@ query GetProduct($id: ID!) {
 		title
 		description
 		totalInventory
+		featuredImage {
+			originalSrc
+			altText
+		}
 		priceRange {
 			maxVariantPrice {
 				amount
@@ -17,13 +21,20 @@ query GetProduct($id: ID!) {
 				node {
 					id
 					title
-					priceV2 {
+					compareAtPrice {
+						amount
+					}
+					price {
 						amount
 					}
 					availableForSale
 					selectedOptions {
 						name
 						value
+					}
+					image {
+						originalSrc
+						altText
 					}
 					product {
 						id

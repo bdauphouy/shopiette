@@ -1,7 +1,7 @@
 import { client } from '$lib/graphql/client';
 import AddToCart from '$lib/graphql/schemas/cart/add-to-cart.gql';
 import GetCart from '$lib/graphql/schemas/cart/get-cart.gql';
-import type { UserError } from '$lib/types';
+import type { Image, Price, UserError } from '$lib/types';
 import { gql, handleClientResponse } from '$lib/utils';
 import { error, json, type RequestHandler } from '@sveltejs/kit';
 
@@ -11,11 +11,22 @@ interface Node {
 		merchandise: {
 			id: string;
 			title: string;
+			availableForSale: boolean;
+			compareAtPrice: Price;
+			price: Price;
+			selectedOptions: {
+				name: string;
+				value: string;
+			}[];
+			image: Image;
 			product: {
 				id: string;
 				title: string;
-				featuredImage: {
-					url: string;
+				description: string;
+				images: {
+					edges: {
+						node: Image;
+					}[];
 				};
 			};
 		};
@@ -27,9 +38,7 @@ interface GetData {
 		id: string;
 		checkoutUrl: string;
 		cost: {
-			totalAmount: {
-				amount: string;
-			};
+			totalAmount: Price;
 		};
 		lines: {
 			edges: Node[];
@@ -43,9 +52,7 @@ interface PostData {
 			id: string;
 			checkoutUrl: string;
 			cost: {
-				totalAmount: {
-					amount: string;
-				};
+				totalAmount: Price;
 			};
 		};
 		userErrors: UserError[];

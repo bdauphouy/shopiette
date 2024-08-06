@@ -13,13 +13,14 @@
 	const cart = getContext<Writable<TCart | null>>('cart');
 
 	let cartErrors: UserError[] = [];
+	let currentVariant = data.product.variants[0];
 
 	const handleCartAdd = async () => {
 		if (!$cart?.id) return;
 
 		const { userErrors } = await Cart.add({
 			cartId: $cart.id,
-			productVariantId: variants[0].id,
+			productVariantId: currentVariant.id,
 			quantity: 1
 		});
 
@@ -44,23 +45,44 @@
 
 		Cookies.set('cart', JSON.stringify(newCart), { expires: 7 });
 	};
-
-	$: variants = data.product.variants;
-	$: images = variants.map((variant) => variant.product.images.edges)[0];
 </script>
 
 <div class="grid grid-cols-3 gap-10">
-	{#if images.length > 0}
+	<!-- {#if images.length > 0}
 		<div class="col-start-1 col-end-3 grid grid-cols-2 gap-5">
 			{#each images as image}
 				<img src={image.node.originalSrc} alt={data.product.title} />
 			{/each}
 		</div>
-	{/if}
+	{/if} -->
+	<div class="col-start-1 col-end-3 grid grid-cols-1 gap-5">
+		<img src={currentVariant.image.originalSrc} alt={data.product.title} />
+	</div>
 	<div class="col-start-3 col-end-4 flex flex-col gap-10">
 		<div class="flex flex-col gap-4">
 			<h2 class="text-4xl font-bold">{data.product.title}</h2>
-			<h3 class="text-2xl">{formatPrice(data.product.priceRange.minVariantPrice.amount)}</h3>
+			<h3 class="text-2xl">{currentVariant.title}</h3>
+			<h4 class="text-xl">
+				{#if currentVariant.compareAtPrice}
+					<span class="line-through">{formatPrice(currentVariant.compareAtPrice.amount)}</span>
+				{/if}
+				{formatPrice(currentVariant.price.amount)}
+			</h4>
+			<ul class="flex items-center gap-2 text-md">
+				{#each data.product.variants as variant}
+					<li>
+						<button
+							on:click={() => (currentVariant = variant)}
+							class="border-2 border-solid border-black rounded-lg px-6 py-2 {currentVariant.title ===
+							variant.title
+								? 'bg-black text-white'
+								: 'bg-white text-black'}"
+						>
+							{variant.title}
+						</button>
+					</li>
+				{/each}
+			</ul>
 		</div>
 		<div class="flex flex-col gap-4">
 			<Button on:click={handleCartAdd}>Ajouter au panier</Button>

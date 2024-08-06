@@ -7,7 +7,8 @@ query GetProducts {
 				description
 				totalInventory
 				featuredImage {
-					url
+					originalSrc
+					altText
 				}
 				priceRange {
 					maxVariantPrice {
