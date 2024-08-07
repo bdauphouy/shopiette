@@ -14,8 +14,10 @@
 		getContext<Writable<(Pick<TCart, 'id' | 'checkoutUrl'> & { quantity: number }) | null>>('cart');
 
 	let cartErrors: UserError[] = [];
-	let currentVariant = data.product.variants.edges[0].node;
 	let quantity = 1;
+
+	$: currentVariant = data.product.variants.edges[0].node;
+	$: isVariant = currentVariant.title !== 'Default Title';
 
 	const handleLess = () => {
 		if (quantity === 1) return;
@@ -72,21 +74,23 @@
 				{/if}
 				{formatPrice(currentVariant.price.amount)}
 			</h4>
-			<ul class="flex items-center gap-2 text-md">
-				{#each data.product.variants.edges as variant}
-					<li>
-						<button
-							on:click={() => (currentVariant = variant.node)}
-							class="border-2 border-solid border-black rounded-lg px-6 py-2 {currentVariant.title ===
-							variant.node.title
-								? 'bg-black text-white'
-								: 'bg-white text-black'}"
-						>
-							{variant.node.title}
-						</button>
-					</li>
-				{/each}
-			</ul>
+			{#if isVariant}
+				<ul class="flex items-center gap-2 text-md">
+					{#each data.product.variants.edges as variant}
+						<li>
+							<button
+								on:click={() => (currentVariant = variant.node)}
+								class="border-2 border-solid border-black rounded-lg px-6 py-2 {currentVariant.title ===
+								variant.node.title
+									? 'bg-black text-white'
+									: 'bg-white text-black'}"
+							>
+								{variant.node.title}
+							</button>
+						</li>
+					{/each}
+				</ul>
+			{/if}
 		</div>
 		<div>
 			<button on:click={handleLess} class="px-4">-</button>
