@@ -7,7 +7,7 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 
-	let cart = getContext<Writable<TCart | null>>('cart');
+	let cart = getContext<Writable<(Omit<TCart, 'lines'> & { quantity: number }) | null>>('cart');
 	let accessToken = getContext<Writable<string | null>>('accessToken');
 
 	let loginErrors: UserError[] = [];
@@ -35,7 +35,8 @@
 
 		await Cart.updateBuyer({
 			cartId: $cart?.id || '',
-			customerAccessToken: token
+			customerAccessToken: token,
+			email: customerData.email
 		});
 
 		accessToken.set(token);

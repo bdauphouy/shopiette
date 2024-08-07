@@ -13,6 +13,7 @@ export interface AddProps {
 export interface UpdateBuyerProps {
 	cartId: string;
 	customerAccessToken: string;
+	email: string;
 }
 
 export interface UpdateBuyerPostData {

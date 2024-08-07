@@ -7,10 +7,10 @@ export const load: PageServerLoad = async ({ cookies }) => {
 
 	if (!accessToken) return redirect(302, '/account/login');
 
-	const response = await Customer.logout({ accessToken });
+	const { userErrors } = await Customer.logout({ accessToken });
 
-	if (response.message) {
-		return error(500, response.message);
+	if (userErrors.length > 0) {
+		return error(500, userErrors[0].message);
 	}
 
 	cookies.delete('accessToken', { path: '/' });

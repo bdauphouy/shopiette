@@ -9,7 +9,7 @@
 
 	export let data: PageData;
 
-	const cart = getContext<Writable<TCart | null>>('cart');
+	const cart = getContext<Writable<(Omit<TCart, 'lines'> & { quantity: number }) | null>>('cart');
 
 	const handleProceedToPayment = () => {
 		if (!$cart?.checkoutUrl) return;

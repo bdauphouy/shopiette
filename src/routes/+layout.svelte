@@ -11,7 +11,7 @@
 
 	export let data: PageData;
 
-	let cart = writable<TCart | null>(null);
+	let cart = writable<(Omit<TCart, 'lines'> & { quantity: number }) | null>(null);
 	let accessToken = writable<string | null>(null);
 
 	const handleCartCreate = async () => {
@@ -23,7 +23,18 @@
 			return;
 		}
 
-		cart.set(await Cart.create());
+		const { cart: ca } = await Cart.create();
+
+		cart.set({
+			id: ca.id,
+			checkoutUrl: ca.checkoutUrl,
+			cost: {
+				totalAmount: {
+					amount: '0.00'
+				}
+			},
+			quantity: 0
+		});
 
 		Cookies.set('cart', JSON.stringify($cart), { expires: 7 });
 	};

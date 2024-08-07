@@ -7,7 +7,7 @@
 
 	export let shop: Shop;
 
-	const cart = getContext<Writable<TCart | null>>('cart');
+	const cart = getContext<Writable<(Omit<TCart, 'lines'> & { quantity: number }) | null>>('cart');
 </script>
 
 <header class="flex justify-between px-40 py-10">

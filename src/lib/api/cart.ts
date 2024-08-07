@@ -32,11 +32,13 @@ export class Cart {
 
 	static async updateBuyer({
 		cartId,
-		customerAccessToken
+		customerAccessToken,
+		email
 	}: UpdateBuyerProps): Promise<UpdateBuyerPostData['cartBuyerIdentityUpdate']> {
 		return Api.post('/cart/update-buyer', {
 			cartId,
-			customerAccessToken
+			customerAccessToken,
+			email
 		});
 	}
 }
