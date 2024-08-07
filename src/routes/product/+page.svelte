@@ -10,10 +10,10 @@
 
 	export let data: PageData;
 
-	const cart = getContext<Writable<TCart | null>>('cart');
+	const cart = getContext<Writable<Omit<TCart, 'lines'> | null>>('cart');
 
 	let cartErrors: UserError[] = [];
-	let currentVariant = data.product.variants[0];
+	let currentVariant = data.product.variants.edges[0].node;
 
 	const handleCartAdd = async () => {
 		if (!$cart?.id) return;
@@ -32,13 +32,13 @@
 
 		cartErrors = [];
 
-		const response = await Cart.get({ id: $cart.id });
+		const ca = await Cart.get({ id: $cart.id });
 
 		const newCart = {
 			id: $cart.id,
 			checkoutUrl: $cart.checkoutUrl,
-			cost: response.cost,
-			quantity: response.lines.map((line) => line.quantity).reduce((a, c) => a + c, 0)
+			cost: ca.cost,
+			quantity: ca.lines.edges.map((line) => line.node.quantity).reduce((a, c) => a + c, 0)
 		};
 
 		cart.set(newCart);
@@ -48,13 +48,6 @@
 </script>
 
 <div class="grid grid-cols-3 gap-10">
-	<!-- {#if images.length > 0}
-		<div class="col-start-1 col-end-3 grid grid-cols-2 gap-5">
-			{#each images as image}
-				<img src={image.node.originalSrc} alt={data.product.title} />
-			{/each}
-		</div>
-	{/if} -->
 	<div class="col-start-1 col-end-3 grid grid-cols-1 gap-5">
 		<img src={currentVariant.image.originalSrc} alt={data.product.title} />
 	</div>
@@ -69,16 +62,16 @@
 				{formatPrice(currentVariant.price.amount)}
 			</h4>
 			<ul class="flex items-center gap-2 text-md">
-				{#each data.product.variants as variant}
+				{#each data.product.variants.edges as variant}
 					<li>
 						<button
-							on:click={() => (currentVariant = variant)}
+							on:click={() => (currentVariant = variant.node)}
 							class="border-2 border-solid border-black rounded-lg px-6 py-2 {currentVariant.title ===
-							variant.title
+							variant.node.title
 								? 'bg-black text-white'
 								: 'bg-white text-black'}"
 						>
-							{variant.title}
+							{variant.node.title}
 						</button>
 					</li>
 				{/each}

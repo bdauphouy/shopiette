@@ -5,6 +5,6 @@ export const load: PageLoad = async () => {
 	const products = await Product.getAll();
 
 	return {
-		products
+		products: products.edges.map(({ node }) => node)
 	};
 };

@@ -8,6 +8,97 @@ mutation AddToCart($cartId: ID!, $products: [CartLineInput!]!) {
 					amount
 				}
 			}
+			lines(first: 50) {
+				edges {
+					node {
+						id
+						quantity
+						merchandise {
+							... on ProductVariant {
+								id
+								title
+								availableForSale
+								compareAtPrice {
+									amount
+								}
+								price {
+									amount
+								}
+								selectedOptions {
+									name
+									value
+								}
+								image {
+									originalSrc
+									altText
+								}
+								product {
+									id
+									title
+									description
+									totalInventory
+									featuredImage {
+										originalSrc
+										altText
+									}
+									priceRange {
+										maxVariantPrice {
+											amount
+										}
+										minVariantPrice {
+											amount
+										}
+									}
+									images(first: 1) {
+										edges {
+											node {
+												originalSrc
+												altText
+											}
+										}
+									}
+									variants(first: 10) {
+										edges {
+											node {
+												id
+												title
+												compareAtPrice {
+													amount
+												}
+												price {
+													amount
+												}
+												availableForSale
+												selectedOptions {
+													name
+													value
+												}
+												image {
+													originalSrc
+													altText
+												}
+												product {
+													id
+													title
+													description
+													images(first: 10) {
+														edges {
+															node {
+																originalSrc
+																altText
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		userErrors {
 			field

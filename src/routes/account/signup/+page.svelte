@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { Customer } from '$lib/api/customer';
 	import type { UserError } from '$lib/types';
 
@@ -17,13 +18,15 @@
 			password: string;
 		};
 
-		const { customer, userErrors } = await Customer.create(customerData);
+		const { customerUserErrors } = await Customer.create(customerData);
 
-		if (userErrors.length > 0) {
-			signupErrors = userErrors;
+		if (customerUserErrors.length > 0) {
+			signupErrors = customerUserErrors;
 
 			return;
 		}
+
+		goto('/account/login');
 
 		signupErrors = [];
 	};

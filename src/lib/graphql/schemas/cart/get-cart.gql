@@ -35,11 +35,60 @@ query GetCart($id: ID!) {
 								id
 								title
 								description
+								totalInventory
+								featuredImage {
+									originalSrc
+									altText
+								}
+								priceRange {
+									maxVariantPrice {
+										amount
+									}
+									minVariantPrice {
+										amount
+									}
+								}
 								images(first: 1) {
 									edges {
 										node {
 											originalSrc
 											altText
+										}
+									}
+								}
+								variants(first: 10) {
+									edges {
+										node {
+											id
+											title
+											compareAtPrice {
+												amount
+											}
+											price {
+												amount
+											}
+											availableForSale
+											selectedOptions {
+												name
+												value
+											}
+											image {
+												originalSrc
+												altText
+											}
+											product {
+												id
+												title
+												description
+												images(first: 10) {
+													edges {
+														node {
+															originalSrc
+															altText
+														}
+													}
+												}
+											}
 										}
 									}
 								}

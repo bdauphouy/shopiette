@@ -1,43 +1,28 @@
-import type { CartItem, Price } from '$lib/types';
+import type {
+	AddProps,
+	CreatePostData,
+	GetData,
+	GetProps,
+	PostData,
+	UpdateBuyerPostData,
+	UpdateBuyerProps
+} from '$lib/api/types/cart';
 import { Api } from './api';
 
-interface GetProps {
-	id: string;
-}
-
-interface CreateProps {
-	id: string;
-	checkoutUrl: string;
-}
-
-interface AddProps {
-	cartId: string;
-	productVariantId: string;
-	quantity: number;
-}
-
-interface UpdateBuyerProps {
-	cartId: string;
-	customerAccessToken: string;
-}
-
 export class Cart {
-	static async get({ id }: GetProps): Promise<
-		Cart & {
-			cost: {
-				totalAmount: Price;
-			};
-			lines: CartItem[];
-		}
-	> {
+	static async get({ id }: GetProps): Promise<GetData['cart']> {
 		return Api.get(`/cart?id=${id}`);
 	}
 
-	static async create(): Promise<CreateProps> {
+	static async create(): Promise<CreatePostData['cartCreate']> {
 		return Api.post('/cart/create');
 	}
 
-	static async add({ cartId, productVariantId, quantity }: AddProps) {
+	static async add({
+		cartId,
+		productVariantId,
+		quantity
+	}: AddProps): Promise<PostData['cartLinesAdd']> {
 		return Api.post<AddProps>('/cart', {
 			cartId,
 			productVariantId,
@@ -45,7 +30,10 @@ export class Cart {
 		});
 	}
 
-	static async updateBuyer({ cartId, customerAccessToken }: UpdateBuyerProps) {
+	static async updateBuyer({
+		cartId,
+		customerAccessToken
+	}: UpdateBuyerProps): Promise<UpdateBuyerPostData['cartBuyerIdentityUpdate']> {
 		return Api.post('/cart/update-buyer', {
 			cartId,
 			customerAccessToken

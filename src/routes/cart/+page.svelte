@@ -29,13 +29,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each data.cart.lines as line, i}
-				{@const isVariant = line.merchandise.title !== 'Default Title'}
+			{#each data.cart.lines.edges as line, i}
+				{@const isVariant = line.node.merchandise.title !== 'Default Title'}
 				<CartLine
 					background={i % 2 === 0 ? 'white' : 'gray'}
-					title="{line.merchandise.product.title} {isVariant ? `(${line.merchandise.title})` : ''}"
-					quantity={line.quantity}
-					price={line.merchandise.price.amount}
+					title="{line.node.merchandise.product.title} {isVariant
+						? `(${line.node.merchandise.title})`
+						: ''}"
+					quantity={line.node.quantity}
+					price={line.node.merchandise.price.amount}
 				/>
 			{/each}
 		</tbody>

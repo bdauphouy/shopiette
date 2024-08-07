@@ -23,10 +23,13 @@
 			password: string;
 		};
 
-		const { accessToken: token, userErrors } = await Customer.login(customerData);
+		const {
+			customerAccessToken: { accessToken: token },
+			customerUserErrors
+		} = await Customer.login(customerData);
 
-		if (userErrors.length > 0) {
-			loginErrors = userErrors;
+		if (customerUserErrors.length > 0) {
+			loginErrors = customerUserErrors;
 
 			return;
 		}
