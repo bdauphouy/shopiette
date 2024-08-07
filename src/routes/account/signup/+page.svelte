@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { Customer } from '$lib/api/customer';
 	import type { UserError } from '$lib/types';
+	import Cookies from 'js-cookie';
 
 	let signupErrors: UserError[] = [];
 
@@ -26,7 +27,27 @@
 			return;
 		}
 
-		goto('/account/login');
+		handleLogin({
+			email: customerData.email,
+			password: customerData.password
+		});
+	};
+
+	const handleLogin = async ({ email, password }: { email: string; password: string }) => {
+		const {
+			customerAccessToken: { accessToken: token },
+			customerUserErrors
+		} = await Customer.login({ email, password });
+
+		if (customerUserErrors.length > 0) {
+			signupErrors = customerUserErrors;
+
+			return;
+		}
+
+		Cookies.set('accessToken', token, { expires: 7 });
+
+		goto('/');
 
 		signupErrors = [];
 	};
