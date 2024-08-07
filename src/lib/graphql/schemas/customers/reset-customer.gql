@@ -1,0 +1,8 @@
+mutation ResetCustomer($password: String!, $resetUrl: URL!) {
+	customerResetByUrl(password: $password, resetUrl: $resetUrl) {
+		customerUserErrors {
+			field
+			message
+		}
+	}
+}

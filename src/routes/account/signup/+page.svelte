@@ -21,7 +21,7 @@
 
 		const { customerUserErrors } = await Customer.create(customerData);
 
-		if (customerUserErrors.length > 0) {
+		if (customerUserErrors?.length > 0) {
 			signupErrors = customerUserErrors;
 
 			return;
@@ -39,7 +39,7 @@
 			customerUserErrors
 		} = await Customer.login({ email, password });
 
-		if (customerUserErrors.length > 0) {
+		if (customerUserErrors?.length > 0) {
 			signupErrors = customerUserErrors;
 
 			return;
@@ -68,3 +68,5 @@
 		</ul>
 	{/if}
 </form>
+
+<a href="/account/login">login</a>

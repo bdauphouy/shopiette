@@ -5,7 +5,11 @@ import type {
 	LoginPostData,
 	LoginProps,
 	LogoutGetData,
-	PostData
+	PostData,
+	RecoverPostData,
+	RecoverProps,
+	ResetPostData,
+	ResetProps
 } from '$lib/api/types/customer';
 import { Api } from './api';
 
@@ -26,5 +30,13 @@ export class Customer {
 		accessToken
 	}: GetProps): Promise<LogoutGetData['customerAccessTokenDelete']> {
 		return Api.get(`/customer/logout?accessToken=${accessToken}`);
+	}
+
+	static async recover({ email }: RecoverProps): Promise<RecoverPostData['customerRecover']> {
+		return Api.post('/customer/recover', { email });
+	}
+
+	static async reset(resetData: ResetProps): Promise<ResetPostData['customerReset']> {
+		return Api.post('/customer/reset', resetData);
 	}
 }

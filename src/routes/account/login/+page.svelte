@@ -23,16 +23,15 @@
 			password: string;
 		};
 
-		const {
-			customerAccessToken: { accessToken: token },
-			customerUserErrors
-		} = await Customer.login(customerData);
+		const { customerAccessToken, customerUserErrors } = await Customer.login(customerData);
 
-		if (customerUserErrors.length > 0) {
+		if (customerUserErrors?.length > 0) {
 			loginErrors = customerUserErrors;
 
 			return;
 		}
+
+		const { accessToken: token } = customerAccessToken;
 
 		await Cart.updateBuyer({
 			cartId: $cart?.id || '',
@@ -62,3 +61,7 @@
 		</ul>
 	{/if}
 </form>
+
+<a href="/account/recover">forgot password?</a>
+
+<a href="/account/signup">signup</a>

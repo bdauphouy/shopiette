@@ -24,7 +24,7 @@
 			quantity: 1
 		});
 
-		if (userErrors.length > 0) {
+		if (userErrors?.length > 0) {
 			cartErrors = userErrors;
 
 			return;

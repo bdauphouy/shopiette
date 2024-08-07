@@ -16,6 +16,15 @@ export interface LoginProps {
 	password: string;
 }
 
+export interface RecoverProps {
+	email: string;
+}
+
+export interface ResetProps {
+	password: string;
+	resetUrl: string;
+}
+
 export interface LoginPostData {
 	customerAccessTokenCreate: {
 		customerAccessToken: {
@@ -30,6 +39,18 @@ export interface LogoutGetData {
 		deletedAccessToken: string;
 		deletedCustomerAccessTokenId: string;
 		userErrors: UserError[];
+	};
+}
+
+export interface RecoverPostData {
+	customerRecover: {
+		customerUserErrors: UserError[];
+	};
+}
+
+export interface ResetPostData {
+	customerReset: {
+		customerUserErrors: UserError[];
 	};
 }
 
