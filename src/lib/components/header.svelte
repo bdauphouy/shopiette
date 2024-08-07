@@ -33,7 +33,10 @@
 </script>
 
 <header class="flex justify-between px-40 py-10 items-center">
-	<h1 class="text-xl font-bold"><a href="/">{shop.name}</a></h1>
+	<div class="flex gap-6 items-center">
+		<img class="w-14" src={shop.brand.logo.image.originalSrc} alt={shop.brand.logo.image.altText} />
+		<h1 class="text-xl font-bold"><a href="/">{shop.name}</a></h1>
+	</div>
 
 	<div class="relative w-1/3">
 		<input

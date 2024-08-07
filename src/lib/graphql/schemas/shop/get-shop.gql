@@ -1,5 +1,13 @@
 query GetShop {
 	shop {
 		name
+		brand {
+			logo {
+				image {
+					originalSrc
+					altText
+				}
+			}
+		}
 	}
 }

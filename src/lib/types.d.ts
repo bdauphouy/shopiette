@@ -74,6 +74,11 @@ export type Customer = {
 
 export type Shop = {
 	name: string;
+	brand: {
+		logo: {
+			image: Image;
+		};
+	};
 };
 
 export type Image = {
