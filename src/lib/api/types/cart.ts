@@ -18,7 +18,7 @@ export interface UpdateBuyerProps {
 
 export interface UpdateLinesProps {
 	cartId: string;
-	lines: Pick<Cart['lines']['edges'][0]['node'], 'id' | 'quantity'>;
+	lines: Pick<Cart['lines']['edges'][0]['node'], 'id' | 'quantity'>[];
 }
 
 export interface RemoveLinesProps {
