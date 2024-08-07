@@ -10,7 +10,8 @@
 
 	export let data: PageData;
 
-	const cart = getContext<Writable<(Omit<TCart, 'lines'> & { quantity: number }) | null>>('cart');
+	const cart =
+		getContext<Writable<(Pick<TCart, 'id' | 'checkoutUrl'> & { quantity: number }) | null>>('cart');
 
 	let cartErrors: UserError[] = [];
 	let currentVariant = data.product.variants.edges[0].node;
@@ -37,11 +38,8 @@
 		const newCart = {
 			id: $cart.id,
 			checkoutUrl: $cart.checkoutUrl,
-			cost: ca.cost,
 			quantity: ca.lines.edges.map((line) => line.node.quantity).reduce((a, c) => a + c, 0)
 		};
-
-		console.log(newCart);
 
 		cart.set(newCart);
 

@@ -11,7 +11,7 @@
 
 	export let data: PageData;
 
-	let cart = writable<(Omit<TCart, 'lines'> & { quantity: number }) | null>(null);
+	let cart = writable<(Pick<TCart, 'id' | 'checkoutUrl'> & { quantity: number }) | null>(null);
 	let accessToken = writable<string | null>(null);
 
 	const handleCartCreate = async () => {
@@ -28,11 +28,6 @@
 		cart.set({
 			id: ca.id,
 			checkoutUrl: ca.checkoutUrl,
-			cost: {
-				totalAmount: {
-					amount: '0.00'
-				}
-			},
 			quantity: 0
 		});
 

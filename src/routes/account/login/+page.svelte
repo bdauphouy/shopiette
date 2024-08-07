@@ -7,7 +7,8 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 
-	let cart = getContext<Writable<(Omit<TCart, 'lines'> & { quantity: number }) | null>>('cart');
+	let cart =
+		getContext<Writable<(Pick<TCart, 'id' | 'checkoutUrl'> & { quantity: number }) | null>>('cart');
 	let accessToken = getContext<Writable<string | null>>('accessToken');
 
 	let loginErrors: UserError[] = [];

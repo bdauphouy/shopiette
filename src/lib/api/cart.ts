@@ -4,8 +4,12 @@ import type {
 	GetData,
 	GetProps,
 	PostData,
+	RemoveLinesPostData,
+	RemoveLinesProps,
 	UpdateBuyerPostData,
-	UpdateBuyerProps
+	UpdateBuyerProps,
+	UpdateLinesPostData,
+	UpdateLinesProps
 } from '$lib/api/types/cart';
 import { Api } from './api';
 
@@ -39,6 +43,26 @@ export class Cart {
 			cartId,
 			customerAccessToken,
 			email
+		});
+	}
+
+	static async updateLines({
+		cartId,
+		lines
+	}: UpdateLinesProps): Promise<UpdateLinesPostData['cartLinesUpdate']> {
+		return Api.post('/cart/lines/update', {
+			cartId,
+			lines
+		});
+	}
+
+	static async removeLines({
+		cartId,
+		lineIds
+	}: RemoveLinesProps): Promise<RemoveLinesPostData['cartLinesRemove']> {
+		return Api.post('/cart/lines/remove', {
+			cartId,
+			lineIds
 		});
 	}
 }
