@@ -20,7 +20,7 @@ export const GET: RequestHandler = async ({ url }) => {
 };
 
 export const POST: RequestHandler = async ({ request }) => {
-	const { cartId, productVariantId, productQuantity } = await request.json();
+	const { cartId, productVariantId, quantity } = await request.json();
 
 	if (!cartId) return error(400, 'Missing cartId');
 
@@ -31,7 +31,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				products: [
 					{
 						merchandiseId: productVariantId,
-						quantity: productQuantity
+						quantity
 					}
 				]
 			}

@@ -124,7 +124,6 @@
 			</thead>
 			<tbody>
 				{#each data.cart.lines.edges as line, i}
-					{@const isVariant = line.node.merchandise.title !== 'Default Title'}
 					<CartLine
 						on:remove={() => handleLineRemove(line.node.id)}
 						on:less={() =>
@@ -136,11 +135,7 @@
 								quantity: line.node.quantity + 1
 							})}
 						background={i % 2 === 0 ? 'white' : 'gray'}
-						title="{line.node.merchandise.product.title} {isVariant
-							? `(${line.node.merchandise.title})`
-							: ''}"
-						quantity={line.node.quantity}
-						price={line.node.merchandise.price.amount}
+						line={line.node}
 					/>
 				{/each}
 			</tbody>

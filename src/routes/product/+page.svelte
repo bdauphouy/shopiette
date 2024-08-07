@@ -15,6 +15,17 @@
 
 	let cartErrors: UserError[] = [];
 	let currentVariant = data.product.variants.edges[0].node;
+	let quantity = 1;
+
+	const handleLess = () => {
+		if (quantity === 1) return;
+
+		quantity--;
+	};
+
+	const handleMore = () => {
+		quantity++;
+	};
 
 	const handleCartAdd = async () => {
 		if (!$cart?.id) return;
@@ -22,7 +33,7 @@
 		const { userErrors } = await Cart.add({
 			cartId: $cart.id,
 			productVariantId: currentVariant.id,
-			quantity: 1
+			quantity
 		});
 
 		if (userErrors?.length > 0) {
@@ -76,6 +87,11 @@
 					</li>
 				{/each}
 			</ul>
+		</div>
+		<div>
+			<button on:click={handleLess} class="px-4">-</button>
+			{quantity}
+			<button on:click={handleMore} class="px-4">+</button>
 		</div>
 		<div class="flex flex-col gap-4">
 			<Button on:click={handleCartAdd}>Ajouter au panier</Button>
