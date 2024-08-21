@@ -1,4 +1,4 @@
-query GetShop {
+query ShopGet {
 	shop {
 		name
 		brand {

@@ -1,15 +1,15 @@
-import type { GetData, PostData } from '$lib/api/types/cart';
+import type { CartCreateData, CartGetData } from '$lib/api/types/cart';
 import { client } from '$lib/graphql/client';
-import AddToCart from '$lib/graphql/schemas/cart/add-to-cart.gql';
+import CartCreate from '$lib/graphql/schemas/cart/create.gql';
 import GetCart from '$lib/graphql/schemas/cart/get-cart.gql';
 import { gql, handleClientResponse } from '$lib/utils';
-import { error, json, type RequestHandler } from '@sveltejs/kit';
+import { json, type RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url }) => {
 	const id = url.searchParams.get('id');
 
 	const data = handleClientResponse(
-		await client.request<GetData>(gql(GetCart), {
+		await client.request<CartGetData>(gql(GetCart), {
 			variables: {
 				id
 			}
@@ -19,24 +19,8 @@ export const GET: RequestHandler = async ({ url }) => {
 	return json(data.cart);
 };
 
-export const POST: RequestHandler = async ({ request }) => {
-	const { cartId, productVariantId, quantity } = await request.json();
+export const POST: RequestHandler = async () => {
+	const data = handleClientResponse(await client.request<CartCreateData>(gql(CartCreate)));
 
-	if (!cartId) return error(400, 'Missing cartId');
-
-	const data = handleClientResponse(
-		await client.request<PostData>(gql(AddToCart), {
-			variables: {
-				cartId,
-				products: [
-					{
-						merchandiseId: productVariantId,
-						quantity
-					}
-				]
-			}
-		})
-	);
-
-	return json(data.cartLinesAdd);
+	return json(data.cartCreate);
 };

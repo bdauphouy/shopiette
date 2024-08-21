@@ -1,8 +1,8 @@
 import { Api } from './api';
-import type { GetData } from './types/shop';
+import type { ShopGetData } from './types/shop';
 
 export class Shop {
-	static async get(): Promise<GetData['shop']> {
+	static async get(): Promise<ShopGetData['shop']> {
 		return Api.get('/shop');
 	}
 }

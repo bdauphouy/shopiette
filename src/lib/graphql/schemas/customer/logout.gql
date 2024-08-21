@@ -1,4 +1,4 @@
-mutation LogoutCustomer($accessToken: String!) {
+mutation CustomerLogout($accessToken: String!) {
 	customerAccessTokenDelete(customerAccessToken: $accessToken) {
 		deletedAccessToken
 		deletedCustomerAccessTokenId

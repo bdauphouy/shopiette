@@ -27,7 +27,7 @@
 	const handleLineRemove = async (id: string) => {
 		if (!$cart?.id) return;
 
-		const { cart: ca, userErrors } = await Cart.removeLines({
+		const { cart: ca, userErrors } = await Cart.deleteLines({
 			cartId: $cart.id,
 			lineIds: [id]
 		});
@@ -81,7 +81,7 @@
 	const handleEmptyCart = async () => {
 		if (!$cart?.id || !data.cart || cartIsEmpty) return;
 
-		const { cart: ca, userErrors } = await Cart.removeLines({
+		const { cart: ca, userErrors } = await Cart.deleteLines({
 			cartId: $cart.id,
 			lineIds: data.cart.lines.edges.map((line) => line.node.id)
 		});

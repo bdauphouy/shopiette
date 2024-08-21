@@ -1,4 +1,4 @@
-query GetProducts {
+query ProductGetAll {
 	products(first: 20) {
 		edges {
 			node {

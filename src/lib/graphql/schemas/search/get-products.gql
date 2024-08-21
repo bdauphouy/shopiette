@@ -1,4 +1,4 @@
-query ProductsSearch($query: String!, $first: Int) {
+query SearchGetProducts($query: String!, $first: Int) {
 	search(query: $query, first: $first, types: PRODUCT) {
 		edges {
 			node {

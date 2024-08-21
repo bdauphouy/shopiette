@@ -1,31 +1,46 @@
 import type { Customer, UserError } from '$lib/types';
 
-export interface GetProps {
+export interface CustomerGetProps {
 	accessToken: string;
 }
 
-export interface CreateProps {
+export interface CustomerCreateProps {
 	firstName: string;
 	lastName: string;
 	email: string;
 	password: string;
 }
 
-export interface LoginProps {
+export interface CustomerLoginProps {
 	email: string;
 	password: string;
 }
 
-export interface RecoverProps {
+export interface CustomerLogoutProps {
+	accessToken: string;
+}
+
+export interface CustomerRecoverProps {
 	email: string;
 }
 
-export interface ResetProps {
+export interface CustomerResetProps {
 	password: string;
 	resetUrl: string;
 }
 
-export interface LoginPostData {
+export interface CustomerGetData {
+	customer: Customer;
+}
+
+export interface CustomerCreateData {
+	customerCreate: {
+		customer: Customer;
+		customerUserErrors: UserError[];
+	};
+}
+
+export interface CustomerLoginData {
 	customerAccessTokenCreate: {
 		customerAccessToken: {
 			accessToken: string;
@@ -34,7 +49,7 @@ export interface LoginPostData {
 	};
 }
 
-export interface LogoutGetData {
+export interface CustomerLogoutData {
 	customerAccessTokenDelete: {
 		deletedAccessToken: string;
 		deletedCustomerAccessTokenId: string;
@@ -42,25 +57,14 @@ export interface LogoutGetData {
 	};
 }
 
-export interface RecoverPostData {
+export interface CustomerRecoverData {
 	customerRecover: {
 		customerUserErrors: UserError[];
 	};
 }
 
-export interface ResetPostData {
+export interface CustomerResetData {
 	customerReset: {
-		customerUserErrors: UserError[];
-	};
-}
-
-export interface GetData {
-	customer: Customer;
-}
-
-export interface PostData {
-	customerCreate: {
-		customer: Customer;
 		customerUserErrors: UserError[];
 	};
 }

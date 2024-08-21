@@ -1,8 +1,11 @@
-import type { GetProps, ProductsGetData } from '$lib/api/types/search';
+import type { SearchGetProductsData, SearchGetProductsProps } from '$lib/api/types/search';
 import { Api } from './api';
 
 export class Search {
-	static async products({ query, first }: GetProps): Promise<ProductsGetData> {
+	static async getProducts({
+		query,
+		first
+	}: SearchGetProductsProps): Promise<SearchGetProductsData> {
 		return Api.get(`/search?query=${query}&first=${first}`);
 	}
 }

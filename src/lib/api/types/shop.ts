@@ -1,5 +1,5 @@
 import type { Shop } from '$lib/types';
 
-export interface GetData {
+export interface ShopGetData {
 	shop: Shop;
 }

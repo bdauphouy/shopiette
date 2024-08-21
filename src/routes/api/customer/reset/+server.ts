@@ -1,14 +1,14 @@
-import type { RecoverPostData } from '$lib/api/types/customer';
+import type { CustomerResetData } from '$lib/api/types/customer';
 import { client } from '$lib/graphql/client';
-import ResetCustomer from '$lib/graphql/schemas/customers/reset-customer.gql';
+import CustomerReset from '$lib/graphql/schemas/customer/reset.gql';
 import { gql, handleClientResponse } from '$lib/utils';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
-export const POST: RequestHandler = async ({ request }) => {
+export const UPDATE: RequestHandler = async ({ request }) => {
 	const { password, resetUrl } = await request.json();
 
 	const data = handleClientResponse(
-		await client.request<RecoverPostData>(gql(ResetCustomer), {
+		await client.request<CustomerResetData>(gql(CustomerReset), {
 			variables: {
 				password,
 				resetUrl
@@ -16,5 +16,5 @@ export const POST: RequestHandler = async ({ request }) => {
 		})
 	);
 
-	return json(data);
+	return json(data.customerReset);
 };

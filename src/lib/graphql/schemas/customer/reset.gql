@@ -1,4 +1,4 @@
-mutation ResetCustomer($password: String!, $resetUrl: URL!) {
+mutation CustomerReset($password: String!, $resetUrl: URL!) {
 	customerResetByUrl(password: $password, resetUrl: $resetUrl) {
 		customerUserErrors {
 			field

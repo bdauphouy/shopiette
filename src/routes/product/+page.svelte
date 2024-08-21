@@ -32,7 +32,7 @@
 	const handleCartAdd = async () => {
 		if (!$cart?.id) return;
 
-		const { userErrors } = await Cart.add({
+		const { userErrors } = await Cart.addLine({
 			cartId: $cart.id,
 			productVariantId: currentVariant.id,
 			quantity

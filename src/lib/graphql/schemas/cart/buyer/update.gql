@@ -1,4 +1,4 @@
-mutation UpdateBuyerCart($buyerIdentity: CartBuyerIdentityInput!, $cartId: ID!) {
+mutation CartUpdateBuyer($buyerIdentity: CartBuyerIdentityInput!, $cartId: ID!) {
 	cartBuyerIdentityUpdate(buyerIdentity: $buyerIdentity, cartId: $cartId) {
 		userErrors {
 			field

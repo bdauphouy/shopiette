@@ -1,4 +1,4 @@
-mutation CreateCart {
+mutation CartCreate {
 	cartCreate {
 		cart {
 			id

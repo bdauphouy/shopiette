@@ -1,5 +1,5 @@
-mutation RemoveLinesCart($cartId: ID!, $lineIds: [ID!]!) {
-	cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+mutation CartUpdateLines($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+	cartLinesUpdate(cartId: $cartId, lines: $lines) {
 		cart {
 			id
 			checkoutUrl

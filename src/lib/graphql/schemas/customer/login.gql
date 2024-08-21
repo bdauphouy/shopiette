@@ -1,4 +1,4 @@
-mutation LoginCustomer($input: CustomerAccessTokenCreateInput!) {
+mutation CustomerLogin($input: CustomerAccessTokenCreateInput!) {
 	customerAccessTokenCreate(input: $input) {
 		customerAccessToken {
 			accessToken

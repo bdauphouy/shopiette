@@ -8,7 +8,7 @@ export interface ProductGetData {
 	product: Product;
 }
 
-export interface ProductsGetData {
+export interface ProductGetAllData {
 	products: {
 		edges: {
 			node: Product;

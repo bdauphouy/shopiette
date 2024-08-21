@@ -1,7 +1,7 @@
-import type { GetData, PostData } from '$lib/api/types/customer';
+import type { CustomerCreateData, CustomerGetData } from '$lib/api/types/customer';
 import { client } from '$lib/graphql/client';
-import CreateCustomer from '$lib/graphql/schemas/customers/create-customer.gql';
-import GetCustomer from '$lib/graphql/schemas/customers/get-customer.gql';
+import CustomerCreate from '$lib/graphql/schemas/customer/create.gql';
+import CustomerGet from '$lib/graphql/schemas/customer/get.gql';
 import { gql, handleClientResponse } from '$lib/utils';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
@@ -9,7 +9,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	const accessToken = url.searchParams.get('accessToken');
 
 	const data = handleClientResponse(
-		await client.request<GetData>(gql(GetCustomer), {
+		await client.request<CustomerGetData>(gql(CustomerGet), {
 			variables: {
 				accessToken
 			}
@@ -23,7 +23,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const customerData = await request.json();
 
 	const data = handleClientResponse(
-		await client.request<PostData>(gql(CreateCustomer), {
+		await client.request<CustomerCreateData>(gql(CustomerCreate), {
 			variables: {
 				input: customerData
 			}

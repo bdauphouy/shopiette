@@ -1,5 +1,5 @@
-mutation AddToCart($cartId: ID!, $products: [CartLineInput!]!) {
-	cartLinesAdd(cartId: $cartId, lines: $products) {
+mutation CartDeleteLines($cartId: ID!, $lineIds: [ID!]!) {
+	cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
 		cart {
 			id
 			checkoutUrl

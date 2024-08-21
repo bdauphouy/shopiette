@@ -1,4 +1,4 @@
-query GetCustomer($accessToken: String!) {
+query CustomerGet($accessToken: String!) {
 	customer(customerAccessToken: $accessToken) {
 		id
 		email

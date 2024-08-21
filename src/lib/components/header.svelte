@@ -20,7 +20,7 @@
 			return;
 		}
 
-		const { search } = await Search.products({ query: searchValue, first: 3 });
+		const { search } = await Search.getProducts({ query: searchValue, first: 3 });
 
 		searchResults = search.edges.map(({ node }) => node);
 	};

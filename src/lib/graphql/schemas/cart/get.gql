@@ -1,4 +1,4 @@
-query GetCart($id: ID!) {
+query CartGet($id: ID!) {
 	cart(id: $id) {
 		id
 		checkoutUrl
