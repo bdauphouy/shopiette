@@ -1,7 +1,7 @@
 import type { CartCreateData, CartGetData } from '$lib/api/types/cart';
 import { client } from '$lib/graphql/client';
 import CartCreate from '$lib/graphql/schemas/cart/create.gql';
-import GetCart from '$lib/graphql/schemas/cart/get-cart.gql';
+import GetCart from '$lib/graphql/schemas/cart/get.gql';
 import { gql, handleClientResponse } from '$lib/utils';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
