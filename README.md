@@ -55,7 +55,7 @@ Get cart information.
 
 ```ts
 const cart = Cart.get({
-	id: 'gid://shopify/Cart/1'
+  id: 'gid://shopify/Cart/1'
 });
 ```
 
@@ -87,7 +87,7 @@ const { cart } = Cart.create();
 
 ```ts
 type Return = {
-	cart: Cart;
+  cart: Cart;
 };
 ```
 
@@ -101,9 +101,9 @@ Add or update a cart buyer identity.
 
 ```ts
 const { userErrors } = Cart.updateBuyer({
-	cartId: 'gid://shopify/Cart/1',
-	customerAccessToken: 'H3fDFVT5JyB2yRLr0rNJNdBsdSqDxk7k',
-	email: 'customer@email.com'
+  cartId: 'gid://shopify/Cart/1',
+  customerAccessToken: 'H3fDFVT5JyB2yRLr0rNJNdBsdSqDxk7k',
+  email: 'customer@email.com'
 });
 ```
 
@@ -119,7 +119,7 @@ const { userErrors } = Cart.updateBuyer({
 
 ```ts
 type Return = {
-	userErrors: UserError[];
+  userErrors: UserError[];
 };
 ```
 
@@ -133,9 +133,9 @@ Add a line to a cart.
 
 ```ts
 const { cart, userErrors } = Cart.addLine({
-	cartId: 'gid://shopify/Cart/1',
-	productVariantId: 'gid://shopify/Variant/1',
-	quantity: 2
+  cartId: 'gid://shopify/Cart/1',
+  productVariantId: 'gid://shopify/Variant/1',
+  quantity: 2
 });
 ```
 
@@ -151,8 +151,8 @@ const { cart, userErrors } = Cart.addLine({
 
 ```ts
 type Return = {
-	cart: Cart;
-	userErrors: UserError[];
+  cart: Cart;
+  userErrors: UserError[];
 };
 ```
 
@@ -166,13 +166,13 @@ Update a line in a cart.
 
 ```ts
 const { cart, userErrors } = Cart.addLine({
-	cartId: 'gid://shopify/Cart/1',
-	lines: [
-		{
-			id: 'gid://shopify/Line/1',
-			quantity: 3
-		}
-	]
+  cartId: 'gid://shopify/Cart/1',
+  lines: [
+    {
+      id: 'gid://shopify/Line/1',
+      quantity: 3
+    }
+  ]
 });
 ```
 
@@ -187,8 +187,8 @@ const { cart, userErrors } = Cart.addLine({
 
 ```ts
 type Return = {
-	cart: Cart;
-	userErrors: UserError[];
+  cart: Cart;
+  userErrors: UserError[];
 };
 ```
 
@@ -202,8 +202,8 @@ Delete a line in a cart.
 
 ```ts
 const { cart, userErrors } = Cart.addLine({
-	cartId: 'gid://shopify/Cart/1',
-	lineIds: ['gid://shopify/Line/1']
+  cartId: 'gid://shopify/Cart/1',
+  lineIds: ['gid://shopify/Line/1']
 });
 ```
 
@@ -218,8 +218,8 @@ const { cart, userErrors } = Cart.addLine({
 
 ```ts
 type Return = {
-	cart: Cart;
-	userErrors: UserError[];
+  cart: Cart;
+  userErrors: UserError[];
 };
 ```
 
@@ -233,7 +233,7 @@ Get customer information.
 
 ```ts
 const customer = Customer.get({
-	accessToken: 'H3fDFVT5JyB2yRLr0rNJNdBsdSqDxk7k'
+  accessToken: 'H3fDFVT5JyB2yRLr0rNJNdBsdSqDxk7k'
 });
 ```
 
@@ -259,10 +259,10 @@ Create a customer.
 
 ```ts
 const customer = Customer.create({
-	firstName: 'John',
-	lastName: 'Doe',
-	email: 'customer@email.com',
-	password: 'Password123!'
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'customer@email.com',
+  password: 'Password123!'
 });
 ```
 
@@ -279,8 +279,8 @@ const customer = Customer.create({
 
 ```ts
 type Return = {
-	customer: Customer;
-	customerUserErrors: UserError[];
+  customer: Customer;
+  customerUserErrors: UserError[];
 };
 ```
 
@@ -294,8 +294,8 @@ Generate an access token in order to log in a customer.
 
 ```ts
 const customer = Customer.login({
-	email: 'customer@email.com',
-	password: 'Password123!'
+  email: 'customer@email.com',
+  password: 'Password123!'
 });
 ```
 
@@ -310,10 +310,10 @@ const customer = Customer.login({
 
 ```ts
 type Return = {
-	customerAccessToken: {
-		accessToken: string;
-	};
-	customerUserErrors: UserError[];
+  customerAccessToken: {
+    accessToken: string;
+  };
+  customerUserErrors: UserError[];
 };
 ```
 
@@ -327,7 +327,7 @@ Expire an access token in order to log out a customer.
 
 ```ts
 const { userErrors } = Customer.logout({
-	accessToken: 'H3fDFVT5JyB2yRLr0rNJNdBsdSqDxk7k'
+  accessToken: 'H3fDFVT5JyB2yRLr0rNJNdBsdSqDxk7k'
 });
 ```
 
@@ -341,9 +341,9 @@ const { userErrors } = Customer.logout({
 
 ```ts
 type Return = {
-	deletedAccessToken: string;
-	deleteCustomerAccessTokenId: string;
-	userErrors: UserError[];
+  deletedAccessToken: string;
+  deleteCustomerAccessTokenId: string;
+  userErrors: UserError[];
 };
 ```
 
@@ -357,7 +357,7 @@ Send an email with a reset password link.
 
 ```ts
 const { customerUserErrors } = Customer.recover({
-	email: 'customer@email.com'
+  email: 'customer@email.com'
 });
 ```
 
@@ -371,7 +371,7 @@ const { customerUserErrors } = Customer.recover({
 
 ```ts
 type Return = {
-	customerUserErrors: UserError[];
+  customerUserErrors: UserError[];
 };
 ```
 
@@ -385,8 +385,8 @@ Reset a customer's password.
 
 ```ts
 const { customerUserErrors } = Customer.reset({
-	password: 'customer@email.com',
-	resetUrl: 'https://yourdomain.com/account/reset/customerId/resetToken'
+  password: 'customer@email.com',
+  resetUrl: 'https://yourdomain.com/account/reset/customerId/resetToken'
 });
 ```
 
@@ -400,7 +400,7 @@ const { customerUserErrors } = Customer.reset({
 
 ```ts
 type Return = {
-	customerUserErrors: UserError[];
+  customerUserErrors: UserError[];
 };
 ```
 
@@ -416,7 +416,7 @@ Get a single product.
 
 ```ts
 const product = Product.get({
-	id: 'gid://shopify/Product/1'
+  id: 'gid://shopify/Product/1'
 });
 ```
 
@@ -448,12 +448,12 @@ const product = Product.getAll();
 
 ```ts
 type Return = {
-	products: {
-		edges: {
-			node: Product;
-		};
-		[];
-	};
+  products: {
+    edges: {
+      node: Product;
+    };
+    [];
+  };
 };
 ```
 
@@ -467,8 +467,8 @@ Search for a product.
 
 ```ts
 const product = Search.getProducts({
-	query: 'Bottle',
-	first: 3
+  query: 'Bottle',
+  first: 3
 });
 ```
 
@@ -483,12 +483,12 @@ const product = Search.getProducts({
 
 ```ts
 type Return = {
-	products: {
-		edges: {
-			node: Product;
-		};
-		[];
-	};
+  products: {
+    edges: {
+      node: Product;
+    };
+    [];
+  };
 };
 ```
 
@@ -518,34 +518,34 @@ type Return = Shop;
 
 ```ts
 type Cart = {
-	id: string;
-	checkoutUrl: string;
-	cost: {
-		totalAmount: Price;
-	};
-	lines: {
-		edges: {
-			node: {
-				id: string;
-				quantity: number;
-				merchandise: {
-					availableForSale: boolean;
-					compareAtPrice: Price | null;
-					id: string;
-					image: Image;
-					price: Price;
-					product: Product;
-					selectedOptions: {
-						name: string;
-						value: string;
-					};
-					[];
-					title: string;
-				};
-			};
-		};
-		[];
-	};
+  id: string;
+  checkoutUrl: string;
+  cost: {
+    totalAmount: Price;
+  };
+  lines: {
+    edges: {
+      node: {
+        id: string;
+        quantity: number;
+        merchandise: {
+          availableForSale: boolean;
+          compareAtPrice: Price | null;
+          id: string;
+          image: Image;
+          price: Price;
+          product: Product;
+          selectedOptions: {
+            name: string;
+            value: string;
+          };
+          [];
+          title: string;
+        };
+      };
+    };
+    [];
+  };
 };
 ```
 
@@ -555,10 +555,10 @@ type Cart = {
 
 ```ts
 type Customer = {
-	id: string;
-	firstName: string;
-	lastName: string;
-	email: string;
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
 };
 ```
 
@@ -566,8 +566,8 @@ type Customer = {
 
 ```ts
 type Image = {
-	originalSrc: string;
-	altText: string;
+  originalSrc: string;
+  altText: string;
 };
 ```
 
@@ -575,7 +575,7 @@ type Image = {
 
 ```ts
 type Price = {
-	amount: string;
+  amount: string;
 };
 ```
 
@@ -583,44 +583,44 @@ type Price = {
 
 ```ts
 type Product = {
-	id: string;
-	title: string;
-	description: string;
-	totalInventory: number;
-	featuredImage: Image;
-	priceRange: {
-		maxVariantPrice: Price;
-		minVariantPrice: Price;
-	};
-	variants: {
-		edges: {
-			node: {
-				id: string;
-				title: string;
-				availableForSale: boolean;
-				compareAtPrice: Price | null;
-				price: Price;
-				selectedOptions: {
-					name: string;
-					value: string;
-				};
-				[];
-				image: Image;
-				product: {
-					id: string;
-					title: string;
-					description: string;
-					images: {
-						edges: {
-							node: Image;
-						};
-						[];
-					};
-				};
-			};
-		};
-		[];
-	};
+  id: string;
+  title: string;
+  description: string;
+  totalInventory: number;
+  featuredImage: Image;
+  priceRange: {
+    maxVariantPrice: Price;
+    minVariantPrice: Price;
+  };
+  variants: {
+    edges: {
+      node: {
+        id: string;
+        title: string;
+        availableForSale: boolean;
+        compareAtPrice: Price | null;
+        price: Price;
+        selectedOptions: {
+          name: string;
+          value: string;
+        };
+        [];
+        image: Image;
+        product: {
+          id: string;
+          title: string;
+          description: string;
+          images: {
+            edges: {
+              node: Image;
+            };
+            [];
+          };
+        };
+      };
+    };
+    [];
+  };
 };
 ```
 
@@ -628,12 +628,12 @@ type Product = {
 
 ```ts
 type Shop = {
-	name: string;
-	brand: {
-		logo: {
-			image: Image;
-		};
-	};
+  name: string;
+  brand: {
+    logo: {
+      image: Image;
+    };
+  };
 };
 ```
 

@@ -27,6 +27,34 @@ export type Cart = {
 	};
 };
 
+export type Collection = {
+	id: string;
+	title: string;
+	description: string;
+	image: Image;
+	products: {
+		edges: {
+			node: Omit<Product, 'variants'>;
+		}[];
+	};
+};
+
+export type Customer = {
+	id: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+};
+
+export type Image = {
+	originalSrc: string;
+	altText: string;
+};
+
+export type Price = {
+	amount: string;
+};
+
 export type Product = {
 	id: string;
 	title: string;
@@ -65,13 +93,6 @@ export type Product = {
 	};
 };
 
-export type Customer = {
-	id: string;
-	firstName: string;
-	lastName: string;
-	email: string;
-};
-
 export type Shop = {
 	name: string;
 	brand: {
@@ -79,15 +100,6 @@ export type Shop = {
 			image: Image;
 		};
 	};
-};
-
-export type Image = {
-	originalSrc: string;
-	altText: string;
-};
-
-export type Price = {
-	amount: string;
 };
 
 export type UserError = {

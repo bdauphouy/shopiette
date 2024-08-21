@@ -1,0 +1,33 @@
+query CollectionGet($id: ID!) {
+	collection(id: $id) {
+		id
+		title
+		description
+		image {
+			originalSrc
+			altText
+		}
+		products(first: 20) {
+			edges {
+				node {
+					id
+					title
+					description
+					totalInventory
+					featuredImage {
+						originalSrc
+						altText
+					}
+					priceRange {
+						maxVariantPrice {
+							amount
+						}
+						minVariantPrice {
+							amount
+						}
+					}
+				}
+			}
+		}
+	}
+}

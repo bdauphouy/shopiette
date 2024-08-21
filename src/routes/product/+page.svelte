@@ -76,16 +76,16 @@
 			</h4>
 			{#if isVariant}
 				<ul class="flex items-center gap-2 text-md">
-					{#each data.product.variants.edges as variant}
+					{#each data.product.variants.edges as { node: variant }}
 						<li>
 							<button
-								on:click={() => (currentVariant = variant.node)}
+								on:click={() => (currentVariant = variant)}
 								class="border-2 border-solid border-black rounded-lg px-6 py-2 {currentVariant.title ===
-								variant.node.title
+								variant.title
 									? 'bg-black text-white'
 									: 'bg-white text-black'}"
 							>
-								{variant.node.title}
+								{variant.title}
 							</button>
 						</li>
 					{/each}
