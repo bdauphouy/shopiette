@@ -4,7 +4,7 @@ import CartUpdateBuyer from '$lib/graphql/schemas/cart/buyer/update.gql';
 import { gql, handleClientResponse } from '$lib/utils';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
-export const UPDATE: RequestHandler = async ({ request }) => {
+export const PUT: RequestHandler = async ({ request }) => {
 	const { cartId, customerAccessToken, email } = await request.json();
 
 	const data = handleClientResponse(

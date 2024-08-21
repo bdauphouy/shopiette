@@ -4,7 +4,7 @@ import CustomerReset from '$lib/graphql/schemas/customer/reset.gql';
 import { gql, handleClientResponse } from '$lib/utils';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
-export const UPDATE: RequestHandler = async ({ request }) => {
+export const PUT: RequestHandler = async ({ request }) => {
 	const { password, resetUrl } = await request.json();
 
 	const data = handleClientResponse(

@@ -19,9 +19,9 @@ export class Api {
 		return response.json();
 	}
 
-	static async update<T>(route: string, body: T = {} as T) {
+	static async put<T>(route: string, body: T = {} as T) {
 		const response = await fetch(PUBLIC_VITE_API_URL + route, {
-			method: 'UPDATE',
+			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'
 			},

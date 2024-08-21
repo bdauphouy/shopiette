@@ -27,7 +27,7 @@ export class Cart {
 		customerAccessToken,
 		email
 	}: CartUpdateBuyerProps): Promise<CartUpdateBuyerData['cartBuyerIdentityUpdate']> {
-		return Api.update<CartUpdateBuyerProps>('/cart/update-buyer', {
+		return Api.put<CartUpdateBuyerProps>('/cart/update-buyer', {
 			cartId,
 			customerAccessToken,
 			email
@@ -50,7 +50,7 @@ export class Cart {
 		cartId,
 		lines
 	}: CartUpdateLinesProps): Promise<CartUpdateLinesData['cartLinesUpdate']> {
-		return Api.update<CartUpdateLinesProps>('/cart/lines', {
+		return Api.put<CartUpdateLinesProps>('/cart/lines', {
 			cartId,
 			lines
 		});

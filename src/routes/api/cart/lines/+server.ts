@@ -32,7 +32,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	return json(data.cartLinesAdd);
 };
 
-export const UPDATE: RequestHandler = async ({ request }) => {
+export const PUT: RequestHandler = async ({ request }) => {
 	const { cartId, lines } = await request.json();
 
 	const data = handleClientResponse(

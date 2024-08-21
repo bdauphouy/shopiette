@@ -44,6 +44,6 @@ export class Customer {
 	}
 
 	static async reset(resetData: CustomerResetProps): Promise<CustomerResetData['customerReset']> {
-		return Api.update<CustomerResetProps>('/customer/reset', resetData);
+		return Api.put<CustomerResetProps>('/customer/reset', resetData);
 	}
 }
