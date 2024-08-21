@@ -1,27 +1,27 @@
 import type { Cart, UserError } from '$lib/types';
 
-export interface CartGetProps {
+export interface CartGetParams {
 	id: string;
 }
 
-export interface CartUpdateBuyerProps {
+export interface CartUpdateBuyerParams {
 	cartId: string;
 	customerAccessToken: string;
 	email: string;
 }
 
-export interface CartAddLineProps {
+export interface CartAddLineParams {
 	cartId: string;
 	productVariantId: string;
 	quantity: number;
 }
 
-export interface CartUpdateLinesProps {
+export interface CartUpdateLinesParams {
 	cartId: string;
 	lines: Pick<Cart['lines']['edges'][0]['node'], 'id' | 'quantity'>[];
 }
 
-export interface CartDeleteLinesProps {
+export interface CartDeleteLinesParams {
 	cartId: string;
 	lineIds: string[];
 }

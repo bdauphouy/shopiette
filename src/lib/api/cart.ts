@@ -1,20 +1,20 @@
 import type {
 	CartAddLineData,
-	CartAddLineProps,
+	CartAddLineParams,
 	CartCreateData,
 	CartDeleteLinesData,
-	CartDeleteLinesProps,
+	CartDeleteLinesParams,
 	CartGetData,
-	CartGetProps,
+	CartGetParams,
 	CartUpdateBuyerData,
-	CartUpdateBuyerProps,
+	CartUpdateBuyerParams,
 	CartUpdateLinesData,
-	CartUpdateLinesProps
+	CartUpdateLinesParams
 } from '$lib/api/types/cart';
 import { Api } from './api';
 
 export class Cart {
-	static async get({ id }: CartGetProps): Promise<CartGetData['cart']> {
+	static async get({ id }: CartGetParams): Promise<CartGetData['cart']> {
 		return Api.get(`/cart?id=${id}`);
 	}
 
@@ -26,8 +26,8 @@ export class Cart {
 		cartId,
 		customerAccessToken,
 		email
-	}: CartUpdateBuyerProps): Promise<CartUpdateBuyerData['cartBuyerIdentityUpdate']> {
-		return Api.put<CartUpdateBuyerProps>('/cart/update-buyer', {
+	}: CartUpdateBuyerParams): Promise<CartUpdateBuyerData['cartBuyerIdentityUpdate']> {
+		return Api.put<CartUpdateBuyerParams>('/cart/update-buyer', {
 			cartId,
 			customerAccessToken,
 			email
@@ -37,9 +37,9 @@ export class Cart {
 	static async addLine({
 		cartId,
 		productVariantId,
-		quantity
-	}: CartAddLineProps): Promise<CartAddLineData['cartLinesAdd']> {
-		return Api.post<CartAddLineProps>('/cart', {
+		quantity = 1
+	}: CartAddLineParams): Promise<CartAddLineData['cartLinesAdd']> {
+		return Api.post<CartAddLineParams>('/cart', {
 			cartId,
 			productVariantId,
 			quantity
@@ -49,8 +49,8 @@ export class Cart {
 	static async updateLines({
 		cartId,
 		lines
-	}: CartUpdateLinesProps): Promise<CartUpdateLinesData['cartLinesUpdate']> {
-		return Api.put<CartUpdateLinesProps>('/cart/lines', {
+	}: CartUpdateLinesParams): Promise<CartUpdateLinesData['cartLinesUpdate']> {
+		return Api.put<CartUpdateLinesParams>('/cart/lines', {
 			cartId,
 			lines
 		});
@@ -59,8 +59,8 @@ export class Cart {
 	static async deleteLines({
 		cartId,
 		lineIds
-	}: CartDeleteLinesProps): Promise<CartDeleteLinesData['cartLinesRemove']> {
-		return Api.delete<CartDeleteLinesProps>('/cart/lines', {
+	}: CartDeleteLinesParams): Promise<CartDeleteLinesData['cartLinesRemove']> {
+		return Api.delete<CartDeleteLinesParams>('/cart/lines', {
 			cartId,
 			lineIds
 		});

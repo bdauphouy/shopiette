@@ -1,6 +1,6 @@
 import type { Product } from '$lib/types';
 
-export interface SearchGetProductsProps {
+export interface SearchGetProductsParams {
 	query: string;
 	first: number;
 }

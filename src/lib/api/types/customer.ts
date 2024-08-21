@@ -1,30 +1,30 @@
 import type { Customer, UserError } from '$lib/types';
 
-export interface CustomerGetProps {
+export interface CustomerGetParams {
 	accessToken: string;
 }
 
-export interface CustomerCreateProps {
+export interface CustomerCreateParams {
 	firstName: string;
 	lastName: string;
 	email: string;
 	password: string;
 }
 
-export interface CustomerLoginProps {
+export interface CustomerLoginParams {
 	email: string;
 	password: string;
 }
 
-export interface CustomerLogoutProps {
+export interface CustomerLogoutParams {
 	accessToken: string;
 }
 
-export interface CustomerRecoverProps {
+export interface CustomerRecoverParams {
 	email: string;
 }
 
-export interface CustomerResetProps {
+export interface CustomerResetParams {
 	password: string;
 	resetUrl: string;
 }

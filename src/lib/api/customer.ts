@@ -1,49 +1,49 @@
 import type {
 	CustomerCreateData,
-	CustomerCreateProps,
+	CustomerCreateParams,
 	CustomerGetData,
-	CustomerGetProps,
+	CustomerGetParams,
 	CustomerLoginData,
-	CustomerLoginProps,
+	CustomerLoginParams,
 	CustomerLogoutData,
-	CustomerLogoutProps,
+	CustomerLogoutParams,
 	CustomerRecoverData,
-	CustomerRecoverProps,
+	CustomerRecoverParams,
 	CustomerResetData,
-	CustomerResetProps
+	CustomerResetParams
 } from '$lib/api/types/customer';
 import { Api } from './api';
 
 export class Customer {
-	static async get({ accessToken }: CustomerGetProps): Promise<CustomerGetData['customer']> {
+	static async get({ accessToken }: CustomerGetParams): Promise<CustomerGetData['customer']> {
 		return Api.get(`/customer?accessToken=${accessToken}`);
 	}
 
 	static async create(
-		customerData: CustomerCreateProps
+		customerData: CustomerCreateParams
 	): Promise<CustomerCreateData['customerCreate']> {
-		return Api.post<CustomerCreateProps>('/customer', customerData);
+		return Api.post<CustomerCreateParams>('/customer', customerData);
 	}
 
 	static async login(
-		loginData: CustomerLoginProps
+		loginData: CustomerLoginParams
 	): Promise<CustomerLoginData['customerAccessTokenCreate']> {
-		return Api.post<CustomerLoginProps>('/customer/login', loginData);
+		return Api.post<CustomerLoginParams>('/customer/login', loginData);
 	}
 
 	static async logout({
 		accessToken
-	}: CustomerLogoutProps): Promise<CustomerLogoutData['customerAccessTokenDelete']> {
+	}: CustomerLogoutParams): Promise<CustomerLogoutData['customerAccessTokenDelete']> {
 		return Api.get(`/customer/logout?accessToken=${accessToken}`);
 	}
 
 	static async recover({
 		email
-	}: CustomerRecoverProps): Promise<CustomerRecoverData['customerRecover']> {
-		return Api.post<CustomerRecoverProps>('/customer/recover', { email });
+	}: CustomerRecoverParams): Promise<CustomerRecoverData['customerRecover']> {
+		return Api.post<CustomerRecoverParams>('/customer/recover', { email });
 	}
 
-	static async reset(resetData: CustomerResetProps): Promise<CustomerResetData['customerReset']> {
-		return Api.put<CustomerResetProps>('/customer/reset', resetData);
+	static async reset(resetData: CustomerResetParams): Promise<CustomerResetData['customerReset']> {
+		return Api.put<CustomerResetParams>('/customer/reset', resetData);
 	}
 }

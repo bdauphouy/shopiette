@@ -1,6 +1,6 @@
 import type { Product } from '$lib/types';
 
-export interface ProductGetProps {
+export interface ProductGetParams {
 	id: string;
 }
 
