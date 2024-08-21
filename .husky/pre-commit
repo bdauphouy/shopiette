@@ -1,1 +1,2 @@
-echo 'it works'
+npm run lint
+npm run check
