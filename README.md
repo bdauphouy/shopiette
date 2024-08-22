@@ -16,6 +16,9 @@ Shopiette simplifies creating SvelteKit apps with the Shopify Storefront API, en
     - [addLine](#addlineparams-cartaddlineparams-promisecartaddlinedatacartlinesadd)
     - [updateLines](#updatelinesparams-cartupdatelinesparams-promisecartupdatelinesdatacartlinesupdate)
     - [deleteLines](#deletelinesparams-cartdeletelinesparams-promisecartdeletelinesdatacartlinesremove)
+  - [Collection](#collection)
+    - [get](#getparams-collectiongetparams-promisecollectiongetdatacollection)
+    - [getAll](#getallparams-collectiongetallparams-promisecollectiongetalldatacollections)
   - [Customer](#customer)
     - [get](#getparams-customergetparams-promisecustomergetdatacustomer)
     - [create](#createparams-customercreateparams-promisecustomercreatedatacustomercreate)
@@ -32,6 +35,7 @@ Shopiette simplifies creating SvelteKit apps with the Shopify Storefront API, en
     - [get](#get-promiseshopgetdatashop)
 - [Types](#types)
   - [Cart](#cart-1)
+  - [Collection](#collection-1)
   - [Customer](#customer-1)
   - [Image](#image)
   - [Price](#price)
@@ -225,6 +229,54 @@ type Return = {
 
 [Reference](#cart-1)
 
+### Collection
+
+#### `get(params: CollectionGetParams): Promise<CollectionGetData['collection']>`
+
+Get a single collection.
+
+```ts
+const collection = Collection.get({
+  id: 'gid://shopify/Collection/1'
+});
+```
+
+#### Parameters
+
+| name | type     | default     | description      |
+| ---- | -------- | ----------- | ---------------- |
+| `id` | `string` | `undefined` | The collection's id |
+
+#### Returns
+
+```ts
+type Return = Collection;
+```
+
+[Reference](#collection-1)
+
+---
+
+#### `getAll(params: CollectionGetAllParams): Promise<CollectionGetAllData['collections']>`
+
+Get all the collections.
+
+```ts
+const collections = Collection.getAll();
+```
+
+#### Returns
+
+```ts
+type Return = {
+  edges: {
+    node: Collection;
+  }[];
+};
+```
+
+[Reference](#collection-1)
+
 ### Customer
 
 #### `get(params: CustomerGetParams): Promise<CustomerGetData['customer']>`
@@ -406,8 +458,6 @@ type Return = {
 
 [Reference](#usererror)
 
-[Reference](#usererror)
-
 ### Product
 
 #### `get(params: ProductGetParams): Promise<ProductGetData['product']>`
@@ -441,19 +491,16 @@ type Return = Product;
 Get all the products.
 
 ```ts
-const product = Product.getAll();
+const products = Product.getAll();
 ```
 
 #### Returns
 
 ```ts
 type Return = {
-  products: {
-    edges: {
-      node: Product;
-    };
-    [];
-  };
+  edges: {
+    node: Product;
+  }[];
 };
 ```
 
@@ -549,7 +596,21 @@ type Cart = {
 };
 ```
 
----
+### Collection
+
+```ts
+type Collection = {
+  id: string;
+  title: string;
+  description: string;
+  image: Image;
+  products: {
+    edges: {
+      node: Omit<Product, 'variants'>;
+    }[];
+  };
+}
+```
 
 ### Customer
 
