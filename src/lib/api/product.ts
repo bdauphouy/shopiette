@@ -1,7 +1,7 @@
 import type { ProductGetAllData, ProductGetData, ProductGetParams } from '$lib/api/types/product';
-import { Api } from './api';
+import { Api } from '.';
 
-export class Product {
+export default class Product {
 	static async get({ id }: ProductGetParams): Promise<ProductGetData['product']> {
 		return Api.get(`/product?id=${id}`);
 	}

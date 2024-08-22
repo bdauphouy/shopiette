@@ -1,6 +1,6 @@
 import { PUBLIC_VITE_API_URL } from '$env/static/public';
 
-export class Api {
+export default class Api {
 	static async get(route: string) {
 		const response = await fetch(PUBLIC_VITE_API_URL + route);
 

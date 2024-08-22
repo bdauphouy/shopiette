@@ -1,5 +1,4 @@
-import { Collection } from '$lib/api/collection';
-import { Product } from '$lib/api/product';
+import { Collection, Product } from '$lib/api';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async () => {

@@ -51,6 +51,15 @@ export type Image = {
 	altText: string;
 };
 
+export type Menu = {
+	items: {
+		id: string;
+		title: string;
+		resource: Pick<Collection, 'id' | 'products'>;
+		items: Menu['items'];
+	}[];
+};
+
 export type Price = {
 	amount: string;
 };

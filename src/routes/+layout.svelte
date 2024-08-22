@@ -1,57 +1,32 @@
 <script lang="ts">
 	import '../app.css';
 
-	import { Cart } from '$lib/api/cart';
+	import { Cart } from '$lib/api';
 	import Header from '$lib/components/header.svelte';
-	import type { Cart as TCart } from '$lib/types';
 	import Cookies from 'js-cookie';
-	import { onMount, setContext } from 'svelte';
-	import { writable } from 'svelte/store';
+	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	let cart = writable<(Pick<TCart, 'id' | 'checkoutUrl'> & { quantity: number }) | null>(null);
-	let accessToken = writable<string | null>(null);
+	$: cart = data.cart;
 
 	const handleCartCreate = async () => {
-		const lsCart = Cookies.get('cart');
+		if (cart) return;
 
-		if (lsCart) {
-			cart.set(JSON.parse(lsCart));
+		const {
+			cart: { id }
+		} = await Cart.create();
 
-			return;
-		}
-
-		const { cart: ca } = await Cart.create();
-
-		cart.set({
-			id: ca.id,
-			checkoutUrl: ca.checkoutUrl,
-			quantity: 0
-		});
-
-		Cookies.set('cart', JSON.stringify($cart), { expires: 7 });
-	};
-
-	const handleAccessToken = () => {
-		const at = Cookies.get('accessToken');
-
-		if (at) {
-			accessToken.set(at);
-		}
+		Cookies.set('cart', JSON.stringify({ id }), { expires: 7 });
 	};
 
 	onMount(() => {
 		handleCartCreate();
-		handleAccessToken();
 	});
-
-	setContext('cart', cart);
-	setContext('accessToken', accessToken);
 </script>
 
-<Header shop={data.shop} />
+<Header {cart} shop={data.shop} />
 
 <main class="px-40 py-10">
 	<slot />

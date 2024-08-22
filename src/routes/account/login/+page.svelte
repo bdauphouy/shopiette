@@ -1,15 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { Cart } from '$lib/api/cart';
-	import { Customer } from '$lib/api/customer';
-	import type { Cart as TCart, UserError } from '$lib/types';
+	import { Cart, Customer } from '$lib/api';
+	import type { UserError } from '$lib/types';
 	import Cookies from 'js-cookie';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
+	import type { PageData } from './$types';
 
-	let cart =
-		getContext<Writable<(Pick<TCart, 'id' | 'checkoutUrl'> & { quantity: number }) | null>>('cart');
-	let accessToken = getContext<Writable<string | null>>('accessToken');
+	export let data: PageData;
 
 	let loginErrors: UserError[] = [];
 
@@ -24,7 +20,10 @@
 			password: string;
 		};
 
-		const { customerAccessToken, customerUserErrors } = await Customer.login(customerData);
+		const {
+			customerAccessToken: { accessToken },
+			customerUserErrors
+		} = await Customer.login(customerData);
 
 		if (customerUserErrors?.length > 0) {
 			loginErrors = customerUserErrors;
@@ -32,21 +31,17 @@
 			return;
 		}
 
-		const { accessToken: token } = customerAccessToken;
+		console.log('accessToken', accessToken);
 
 		await Cart.updateBuyer({
-			cartId: $cart?.id || '',
-			customerAccessToken: token,
+			cartId: data.cart ? data.cart.id : '',
+			customerAccessToken: accessToken,
 			email: customerData.email
 		});
 
-		accessToken.set(token);
-
-		Cookies.set('accessToken', token, { expires: 7 });
+		Cookies.set('accessToken', accessToken, { expires: 7 });
 
 		goto('/');
-
-		loginErrors = [];
 	};
 </script>
 

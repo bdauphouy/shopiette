@@ -1,7 +1,7 @@
 import type { SearchGetProductsData, SearchGetProductsParams } from '$lib/api/types/search';
-import { Api } from './api';
+import { Api } from '.';
 
-export class Search {
+export default class Search {
 	static async getProducts({
 		query,
 		first = 5

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Customer } from '$lib/api/customer';
+	import { Customer } from '$lib/api';
 	import type { UserError } from '$lib/types';
 
 	let recoverErrors: UserError[] = [];

@@ -11,9 +11,9 @@ import type {
 	CartUpdateLinesData,
 	CartUpdateLinesParams
 } from '$lib/api/types/cart';
-import { Api } from './api';
+import { Api } from '.';
 
-export class Cart {
+export default class Cart {
 	static async get({ id }: CartGetParams): Promise<CartGetData['cart']> {
 		return Api.get(`/cart?id=${id}`);
 	}
@@ -27,7 +27,7 @@ export class Cart {
 		customerAccessToken,
 		email
 	}: CartUpdateBuyerParams): Promise<CartUpdateBuyerData['cartBuyerIdentityUpdate']> {
-		return Api.put<CartUpdateBuyerParams>('/cart/update-buyer', {
+		return Api.put<CartUpdateBuyerParams>('/cart/buyer', {
 			cartId,
 			customerAccessToken,
 			email
@@ -39,7 +39,7 @@ export class Cart {
 		productVariantId,
 		quantity = 1
 	}: CartAddLineParams): Promise<CartAddLineData['cartLinesAdd']> {
-		return Api.post<CartAddLineParams>('/cart', {
+		return Api.post<CartAddLineParams>('/cart/lines', {
 			cartId,
 			productVariantId,
 			quantity

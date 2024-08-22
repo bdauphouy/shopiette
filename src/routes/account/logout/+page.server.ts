@@ -1,4 +1,4 @@
-import { Customer } from '$lib/api/customer';
+import { Customer } from '$lib/api';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

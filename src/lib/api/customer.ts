@@ -12,9 +12,9 @@ import type {
 	CustomerResetData,
 	CustomerResetParams
 } from '$lib/api/types/customer';
-import { Api } from './api';
+import { Api } from '.';
 
-export class Customer {
+export default class Customer {
 	static async get({ accessToken }: CustomerGetParams): Promise<CustomerGetData['customer']> {
 		return Api.get(`/customer?accessToken=${accessToken}`);
 	}

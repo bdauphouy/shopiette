@@ -1,0 +1,66 @@
+query MenuGet($handle: String!) {
+	menu(handle: $handle) {
+		items {
+			id
+			title
+			resource {
+				... on Collection {
+					id
+					products(first: 6) {
+						edges {
+							node {
+								id
+								title
+								description
+								totalInventory
+								featuredImage {
+									originalSrc
+									altText
+								}
+								priceRange {
+									maxVariantPrice {
+										amount
+									}
+									minVariantPrice {
+										amount
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			items {
+				id
+				title
+				resource {
+					... on Collection {
+						id
+						products(first: 6) {
+							edges {
+								node {
+									id
+									title
+									description
+									totalInventory
+									featuredImage {
+										originalSrc
+										altText
+									}
+									priceRange {
+										maxVariantPrice {
+											amount
+										}
+										minVariantPrice {
+											amount
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

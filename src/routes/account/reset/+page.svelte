@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { Customer } from '$lib/api/customer';
+	import { Customer } from '$lib/api';
 	import type { UserError } from '$lib/types';
 	import type { PageData } from './$types';
 

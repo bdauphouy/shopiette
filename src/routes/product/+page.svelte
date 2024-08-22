@@ -1,17 +1,12 @@
 <script lang="ts">
-	import { Cart } from '$lib/api/cart';
+	import { invalidateAll } from '$app/navigation';
+	import { Cart } from '$lib/api';
 	import Button from '$lib/components/button.svelte';
-	import type { Cart as TCart, UserError } from '$lib/types';
+	import type { UserError } from '$lib/types';
 	import { formatPrice } from '$lib/utils';
-	import Cookies from 'js-cookie';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-
-	const cart =
-		getContext<Writable<(Pick<TCart, 'id' | 'checkoutUrl'> & { quantity: number }) | null>>('cart');
 
 	let cartErrors: UserError[] = [];
 	let quantity = 1;
@@ -30,10 +25,10 @@
 	};
 
 	const handleCartAdd = async () => {
-		if (!$cart?.id) return;
+		if (!data.cart) return;
 
 		const { userErrors } = await Cart.addLine({
-			cartId: $cart.id,
+			cartId: data.cart.id,
 			productVariantId: currentVariant.id,
 			quantity
 		});
@@ -44,19 +39,9 @@
 			return;
 		}
 
+		invalidateAll();
+
 		cartErrors = [];
-
-		const ca = await Cart.get({ id: $cart.id });
-
-		const newCart = {
-			id: $cart.id,
-			checkoutUrl: $cart.checkoutUrl,
-			quantity: ca.lines.edges.map((line) => line.node.quantity).reduce((a, c) => a + c, 0)
-		};
-
-		cart.set(newCart);
-
-		Cookies.set('cart', JSON.stringify(newCart), { expires: 7 });
 	};
 </script>
 
@@ -67,7 +52,18 @@
 	<div class="col-start-3 col-end-4 flex flex-col gap-10">
 		<div class="flex flex-col gap-4">
 			<h2 class="text-4xl font-bold">{data.product.title}</h2>
-			<h3 class="text-2xl">{currentVariant.title}</h3>
+			{#if isVariant}
+				<h3 class="text-2xl">{currentVariant.title}</h3>
+			{/if}
+			{#if currentVariant.availableForSale}
+				<span class="text-md bg-green-700 text-white self-start rounded-full px-4 py-1">
+					In stock
+				</span>
+			{:else}
+				<span class="text-md bg-orange-400 text-white self-start rounded-full px-4 py-1">
+					Out of stock
+				</span>
+			{/if}
 			<h4 class="text-xl">
 				{#if currentVariant.compareAtPrice}
 					<span class="line-through">{formatPrice(currentVariant.compareAtPrice.amount)}</span>
@@ -98,7 +94,9 @@
 			<button on:click={handleMore} class="px-4">+</button>
 		</div>
 		<div class="flex flex-col gap-4">
-			<Button on:click={handleCartAdd}>Ajouter au panier</Button>
+			<Button disabled={data.product.totalInventory === 0} on:click={handleCartAdd}>
+				Ajouter au panier
+			</Button>
 			{#if cartErrors.length > 0}
 				<ul class="text-md text-red-500 flex flex-col gap-2">
 					{#each cartErrors as error}

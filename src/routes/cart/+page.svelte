@@ -1,34 +1,31 @@
 <script lang="ts">
-	import { Cart } from '$lib/api/cart';
+	import { invalidateAll } from '$app/navigation';
+	import { Cart } from '$lib/api';
 	import Button from '$lib/components/button.svelte';
 	import CartLine from '$lib/components/cart-line.svelte';
-	import type { Cart as TCart, UserError } from '$lib/types';
+	import type { UserError } from '$lib/types';
 	import { formatPrice } from '$lib/utils';
-	import Cookies from 'js-cookie';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	const cart =
-		getContext<Writable<(Pick<TCart, 'id' | 'checkoutUrl'> & { quantity: number }) | null>>('cart');
-
 	let cartErrors: UserError[] = [];
 
-	$: cartIsEmpty = data.cart?.lines.edges.length === 0;
+	$: cartIsEmpty = data.cart && data.cart.lines.edges.length === 0;
 
 	const handleProceedToPayment = () => {
-		if (!$cart?.checkoutUrl) return;
+		if (!data.cart) return;
 
-		window.location.href = $cart.checkoutUrl;
+		window.location.href = data.cart.checkoutUrl;
+
+		invalidateAll();
 	};
 
 	const handleLineRemove = async (id: string) => {
-		if (!$cart?.id) return;
+		if (!data.cart) return;
 
-		const { cart: ca, userErrors } = await Cart.deleteLines({
-			cartId: $cart.id,
+		const { userErrors } = await Cart.deleteLines({
+			cartId: data.cart.id,
 			lineIds: [id]
 		});
 
@@ -38,24 +35,14 @@
 			return;
 		}
 
-		data.cart = ca;
-
-		const newCart = {
-			id: $cart.id,
-			checkoutUrl: $cart.checkoutUrl,
-			quantity: ca.lines.edges.map((line) => line.node.quantity).reduce((a, c) => a + c, 0)
-		};
-
-		cart.set(newCart);
-
-		Cookies.set('cart', JSON.stringify(newCart), { expires: 7 });
+		invalidateAll();
 	};
 
 	const handleLineUpdate = async (id: string, updates: { quantity: number }) => {
-		if (!$cart?.id) return;
+		if (!data.cart) return;
 
-		const { cart: ca, userErrors } = await Cart.updateLines({
-			cartId: $cart.id,
+		const { userErrors } = await Cart.updateLines({
+			cartId: data.cart.id,
 			lines: [{ id, ...updates }]
 		});
 
@@ -65,24 +52,14 @@
 			return;
 		}
 
-		data.cart = ca;
-
-		const newCart = {
-			id: $cart.id,
-			checkoutUrl: $cart.checkoutUrl,
-			quantity: ca.lines.edges.map((line) => line.node.quantity).reduce((a, c) => a + c, 0)
-		};
-
-		cart.set(newCart);
-
-		Cookies.set('cart', JSON.stringify(newCart), { expires: 7 });
+		invalidateAll();
 	};
 
 	const handleEmptyCart = async () => {
-		if (!$cart?.id || !data.cart || cartIsEmpty) return;
+		if (!data.cart || cartIsEmpty) return;
 
-		const { cart: ca, userErrors } = await Cart.deleteLines({
-			cartId: $cart.id,
+		const { userErrors } = await Cart.deleteLines({
+			cartId: data.cart.id,
 			lineIds: data.cart.lines.edges.map((line) => line.node.id)
 		});
 
@@ -92,17 +69,7 @@
 			return;
 		}
 
-		data.cart = ca;
-
-		const newCart = {
-			id: $cart.id,
-			checkoutUrl: $cart.checkoutUrl,
-			quantity: ca.lines.edges.map((line) => line.node.quantity).reduce((a, c) => a + c, 0)
-		};
-
-		cart.set(newCart);
-
-		Cookies.set('cart', JSON.stringify(newCart), { expires: 7 });
+		invalidateAll();
 	};
 </script>
 

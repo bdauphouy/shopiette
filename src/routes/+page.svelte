@@ -5,13 +5,18 @@
 	export let data: PageData;
 </script>
 
-<h2 class="font-bold text-3xl">Collections</h2>
 <ul class="mt-10 grid grid-cols-6 gap-10">
-	{#each data.collections as collection}
-		<a href="/collection?id={collection.id}" class="flex flex-col gap-4">
-			<img src={collection.image.originalSrc} alt="" />
-			<h3 class="font-bold text-xl">{collection.title}</h3>
-		</a>
+	{#each data.menu?.items as item}
+		{#if item.resource?.id}
+			<li>
+				<a
+					href="/collection?id={item.resource.id}"
+					class="flex flex-col gap-4 text-xl font-bold bg-slate-200 px-6 py-4 rounded-lg"
+				>
+					{item.title}
+				</a>
+			</li>
+		{/if}
 	{/each}
 </ul>
 
