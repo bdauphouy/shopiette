@@ -2,7 +2,7 @@
 	import '../app.css';
 
 	import { Cart } from '$lib/api';
-	import Header from '$lib/components/header.svelte';
+	import Header from '$lib/components/header/header.svelte';
 	import Cookies from 'js-cookie';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
@@ -26,8 +26,8 @@
 	});
 </script>
 
-<Header {cart} shop={data.shop} />
+<Header {cart} shop={data.shop} menu={data.menu} />
 
-<main class="px-40 py-10">
+<main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 	<slot />
 </main>

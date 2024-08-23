@@ -56,7 +56,11 @@ export type Menu = {
 		id: string;
 		title: string;
 		resource: Pick<Collection, 'id' | 'products'>;
-		items: Menu['items'];
+		items: {
+			id: string;
+			title: string;
+			resource: Pick<Collection, 'id' | 'products'>;
+		}[];
 	}[];
 };
 

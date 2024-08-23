@@ -11,7 +11,7 @@ export interface ProductGetData {
 export interface ProductGetAllData {
 	products: {
 		edges: {
-			node: Product;
+			node: Omit<Product, 'variant'>;
 		}[];
 	};
 }
