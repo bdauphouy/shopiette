@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { Cart } from '$lib/api';
-	import Button from '$lib/components/button.svelte';
+	import Tag from '$lib/components/tag.svelte';
 	import type { UserError } from '$lib/types';
 	import { formatPrice } from '$lib/utils';
 	import type { PageData } from './$types';
@@ -11,20 +11,37 @@
 	let cartErrors: UserError[] = [];
 	let quantity = 1;
 
-	$: currentVariant = data.product.variants.edges[0].node;
-	$: isVariant = currentVariant.title !== 'Default Title';
+	const variantsOptions = data.product.variants.edges
+		.map(({ node }) => node.selectedOptions)
+		.reduce<{ name: string; options: string[] }[]>((accumulator, options) => {
+			options.forEach(({ name, value }) => {
+				const variant = accumulator.find((variant) => variant.name === name);
 
-	const handleLess = () => {
-		if (quantity === 1) return;
+				if (variant) {
+					if (!variant.options.includes(value)) {
+						variant.options.push(value);
+					}
+				} else {
+					accumulator.push({ name, options: [value] });
+				}
+			});
 
-		quantity--;
+			return accumulator;
+		}, []);
+
+	let currentOptions = variantsOptions.map((variant) => variant.options[0]);
+
+	$: currentVariant = data.product.variants.edges.find(({ node }) =>
+		node.selectedOptions.every(({ value }) => currentOptions.find((option) => option === value))
+	)!.node;
+
+	const handleOptionClick = (option: string, i: number) => {
+		currentOptions[i] = option;
 	};
 
-	const handleMore = () => {
-		quantity++;
-	};
+	const handleAddToCart = async (event: SubmitEvent) => {
+		event.preventDefault();
 
-	const handleCartAdd = async () => {
 		if (!data.cart) return;
 
 		const { userErrors } = await Cart.addLine({
@@ -45,66 +62,86 @@
 	};
 </script>
 
-<div class="grid grid-cols-3 gap-10">
-	<div class="col-start-1 col-end-3 grid grid-cols-1 gap-5">
-		<img src={currentVariant.image.originalSrc} alt={data.product.title} />
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
+	<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1">
+		<div class="aspect-h-4 aspect-w-3 overflow-hidden rounded-lg">
+			<img
+				src={currentVariant.image.originalSrc}
+				alt={currentVariant.image.altText}
+				class="h-full w-full object-cover object-center"
+			/>
+		</div>
 	</div>
-	<div class="col-start-3 col-end-4 flex flex-col gap-10">
-		<div class="flex flex-col gap-4">
-			<h2 class="text-4xl font-bold">{data.product.title}</h2>
-			{#if isVariant}
-				<h3 class="text-2xl">{currentVariant.title}</h3>
-			{/if}
-			{#if currentVariant.availableForSale}
-				<span class="text-md bg-green-700 text-white self-start rounded-full px-4 py-1">
-					In stock
+	<div>
+		<h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl mb-4">
+			{data.product.title}
+		</h1>
+		<div class="mt-4 lg:row-span-3 lg:mt-0">
+			<h2 class="sr-only">Product information</h2>
+			<div class="flex items-center gap-4">
+				<span class="text-3xl tracking-tight text-gray-900">
+					{formatPrice(currentVariant.price.amount)}
 				</span>
-			{:else}
-				<span class="text-md bg-orange-400 text-white self-start rounded-full px-4 py-1">
-					Out of stock
-				</span>
-			{/if}
-			<h4 class="text-xl">
 				{#if currentVariant.compareAtPrice}
-					<span class="line-through">{formatPrice(currentVariant.compareAtPrice.amount)}</span>
+					<span class="text-md font-medium text-gray-400 line-through">
+						{formatPrice(currentVariant.compareAtPrice.amount)}
+					</span>
+					<Tag>Sale</Tag>
 				{/if}
-				{formatPrice(currentVariant.price.amount)}
-			</h4>
-			{#if isVariant}
-				<ul class="flex items-center gap-2 text-md">
-					{#each data.product.variants.edges as { node: variant }}
-						<li>
-							<button
-								on:click={() => (currentVariant = variant)}
-								class="border-2 border-solid border-black rounded-lg px-6 py-2 {currentVariant.title ===
-								variant.title
-									? 'bg-black text-white'
-									: 'bg-white text-black'}"
-							>
-								{variant.title}
-							</button>
-						</li>
-					{/each}
-				</ul>
-			{/if}
+			</div>
+			<div class="mt-4">
+				{#if currentVariant.availableForSale}
+					<Tag>In stock</Tag>
+				{:else}
+					<Tag status="error">Out of stock</Tag>
+				{/if}
+			</div>
+			<form on:submit={handleAddToCart} class="mt-10">
+				{#each variantsOptions as variantOptions, i}
+					<div class="mt-6">
+						<h3 class="text-sm font-medium text-gray-900">{variantOptions.name}</h3>
+						<fieldset aria-label="Choose a {variantOptions.name}" class="mt-4">
+							<div class="grid grid-cols-3 gap-4 sm:grid-cols-6 lg:grid-cols-4">
+								{#each variantOptions.options as option}
+									<label
+										class="{currentOptions[i] === option
+											? 'ring-2 ring-indigo-500'
+											: ''} group relative flex cursor-pointer items-center justify-center rounded-md border bg-white px-4 py-3 text-sm font-medium uppercase text-gray-900 shadow-sm hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
+									>
+										<input
+											on:input={() => handleOptionClick(option, i)}
+											type="radio"
+											name="{variantOptions.name}-choice"
+											class="sr-only"
+										/>
+										<span>{option}</span>
+									</label>
+								{/each}
+							</div>
+						</fieldset>
+					</div>
+				{/each}
+				<button
+					type="submit"
+					class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 cursor-not-allowed"
+					disabled={!currentVariant.availableForSale}
+				>
+					Add to cart
+				</button>
+				{#if cartErrors.length > 0}
+					<ul class="text-md text-red-500 flex flex-col gap-2 mt-4">
+						{#each cartErrors as error}
+							<li class="text-sm font-medium text-red-500">{error.message}</li>
+						{/each}
+					</ul>
+				{/if}
+			</form>
 		</div>
-		<div>
-			<button on:click={handleLess} class="px-4">-</button>
-			{quantity}
-			<button on:click={handleMore} class="px-4">+</button>
+		<div class="mt-10 flex flex-col gap-4">
+			<h3 class="text-sm font-medium text-gray-900">Description</h3>
+			<p class="text-sm text-gray-400 leading-6">
+				{data.product.description}
+			</p>
 		</div>
-		<div class="flex flex-col gap-4">
-			<Button disabled={data.product.totalInventory === 0} on:click={handleCartAdd}>
-				Ajouter au panier
-			</Button>
-			{#if cartErrors.length > 0}
-				<ul class="text-md text-red-500 flex flex-col gap-2">
-					{#each cartErrors as error}
-						<li>{error.message}</li>
-					{/each}
-				</ul>
-			{/if}
-		</div>
-		<p class="text-lg">{data.product.description}</p>
 	</div>
 </div>

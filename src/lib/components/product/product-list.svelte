@@ -5,14 +5,14 @@
 	export let title: string;
 	export let products: Omit<Product, 'variants'>[];
 	export let limit: number | undefined = undefined;
-	export let seeMoreLink: string | undefined = undefined;
+	export let viewAllLink: string | undefined = undefined;
 </script>
 
 <div>
 	<header class="flex items-center justify-between">
 		<h2 class="text-2xl font-bold tracking-tight text-gray-900">{title}</h2>
-		{#if seeMoreLink}
-			<a href={seeMoreLink} class="text-sm font-medium text-gray-700 hover:text-gray-800">
+		{#if viewAllLink}
+			<a href={viewAllLink} class="text-sm font-medium text-gray-700 hover:text-gray-800">
 				See more
 			</a>
 		{/if}

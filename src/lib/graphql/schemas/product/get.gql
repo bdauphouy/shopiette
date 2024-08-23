@@ -16,6 +16,14 @@ query ProductGet($id: ID!) {
 				amount
 			}
 		}
+		images(first: 3) {
+			edges {
+				node {
+					url
+					altText
+				}
+			}
+		}
 		variants(first: 10) {
 			edges {
 				node {

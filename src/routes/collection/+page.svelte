@@ -7,10 +7,14 @@
 	$: menu = data.menu.items.find(({ title }) => title === data.collection.title);
 </script>
 
-<ProductList
-	title={data.collection.title}
-	products={data.collection.products.edges.map(({ node }) => node)}
-/>
+{#if data.collection.products.edges.length > 0}
+	<ProductList
+		title={data.collection.title}
+		products={data.collection.products.edges.map(({ node }) => node)}
+	/>
+{:else}
+	<h2 class="text-2xl font-bold tracking-tight text-gray-900">{data.collection.title}</h2>
+{/if}
 
 {#if menu && menu.items.length > 0}
 	<ul class="flex flex-col gap-10 mt-10">
@@ -20,7 +24,7 @@
 					title={item.title}
 					products={item.resource.products.edges.map(({ node }) => node)}
 					limit={5}
-					seeMoreLink="/collection?id={item.resource.id}"
+					viewAllLink="/collection?id={item.resource.id}"
 				/>
 			</li>
 		{/each}

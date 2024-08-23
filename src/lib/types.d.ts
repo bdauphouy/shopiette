@@ -78,6 +78,14 @@ export type Product = {
 		maxVariantPrice: Price;
 		minVariantPrice: Price;
 	};
+	images: {
+		edges: {
+			node: {
+				url: string;
+				altText: string;
+			};
+		}[];
+	};
 	variants: {
 		edges: {
 			node: {
