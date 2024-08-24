@@ -1,5 +1,5 @@
-import { Cart, Menu, Shop } from '$lib/api';
-import type { Cart as TCart } from '$lib/types';
+import { Cart, Customer, Menu, Shop } from '$lib/api';
+import type { Cart as TCart, Customer as TCustomer } from '$lib/types';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ cookies }) => {
@@ -7,6 +7,7 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 	const menu = await Menu.get({ handle: 'main-menu' });
 
 	let cart: TCart | null = null;
+	let customer: TCustomer | null = null;
 
 	const cartRawCookie = cookies.get('cart');
 
@@ -33,9 +34,16 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 		}
 	}
 
+	const accessToken = cookies.get('accessToken');
+
+	if (accessToken) {
+		customer = await Customer.get({ accessToken });
+	}
+
 	return {
 		shop,
 		menu,
-		cart
+		cart,
+		customer
 	};
 };

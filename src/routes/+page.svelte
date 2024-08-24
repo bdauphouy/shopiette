@@ -1,8 +1,15 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
 	import ProductList from '$lib/components/product/product-list.svelte';
+	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+
+	onMount(() => {
+		if ($page.url.searchParams.has('invalidate')) invalidateAll();
+	});
 </script>
 
 <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">

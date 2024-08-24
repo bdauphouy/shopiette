@@ -26,7 +26,7 @@
 	});
 </script>
 
-<Header {cart} shop={data.shop} menu={data.menu} />
+<Header isLoggedIn={data.customer !== null} {cart} shop={data.shop} menu={data.menu} />
 
 <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
 	<slot />

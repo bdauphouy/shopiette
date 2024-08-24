@@ -15,5 +15,5 @@ export const load: PageServerLoad = async ({ cookies }) => {
 
 	cookies.delete('accessToken', { path: '/' });
 
-	return redirect(302, '/');
+	return redirect(302, '/?invalidate=true');
 };

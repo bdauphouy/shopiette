@@ -8,6 +8,7 @@
 	export let shop: Shop;
 	export let menu: Menu;
 	export let cart: TCart | null;
+	export let isLoggedIn = false;
 
 	let isMobileMenuOpen = false;
 	let isCartOpen = false;
@@ -97,13 +98,26 @@
 				</div>
 				<div class="ml-auto flex items-center">
 					<div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-						<a href="/account/login" class="text-sm font-medium text-gray-700 hover:text-gray-800">
-							Sign in
-						</a>
-						<span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
-						<a href="/account/signup" class="text-sm font-medium text-gray-700 hover:text-gray-800">
-							Create account
-						</a>
+						{#if isLoggedIn}
+							<a href="/account" class="text-sm font-medium text-gray-700 hover:text-gray-800">
+								My account
+							</a>
+						{:else}
+							<a
+								href="/account/login"
+								class="text-sm font-medium text-gray-700 hover:text-gray-800"
+							>
+								Sign in
+							</a>
+							<span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
+
+							<a
+								href="/account/signup"
+								class="text-sm font-medium text-gray-700 hover:text-gray-800"
+							>
+								Create account
+							</a>
+						{/if}
 					</div>
 					<div class="flex lg:ml-6">
 						<button on:click={handleSearchToggle} class="p-2 text-gray-400 hover:text-gray-500">

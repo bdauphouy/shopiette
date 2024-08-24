@@ -36,7 +36,7 @@
 
 		Cookies.set('accessToken', customerAccessToken.accessToken, { expires: 7 });
 
-		goto('/');
+		goto('/?invalidate=true');
 	};
 </script>
 
