@@ -43,7 +43,9 @@ export default class Customer {
 		return Api.post<CustomerRecoverParams>('/customer/recover', { email });
 	}
 
-	static async reset(resetData: CustomerResetParams): Promise<CustomerResetData['customerReset']> {
+	static async reset(
+		resetData: CustomerResetParams
+	): Promise<CustomerResetData['customerResetByUrl']> {
 		return Api.put<CustomerResetParams>('/customer/reset', resetData);
 	}
 }

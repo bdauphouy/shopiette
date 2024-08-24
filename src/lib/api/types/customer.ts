@@ -64,7 +64,7 @@ export interface CustomerRecoverData {
 }
 
 export interface CustomerResetData {
-	customerReset: {
+	customerResetByUrl: {
 		customerUserErrors: UserError[];
 	};
 }

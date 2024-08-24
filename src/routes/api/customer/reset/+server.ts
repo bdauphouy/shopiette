@@ -16,5 +16,5 @@ export const PUT: RequestHandler = async ({ request }) => {
 		})
 	);
 
-	return json(data.customerReset);
+	return json(data.customerResetByUrl);
 };
