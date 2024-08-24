@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Menu, Shop, Cart as TCart } from '$lib/types';
+	import AnnouncementBar from '../announcement-bar.svelte';
 	import MobileMenu from './mobile-menu.svelte';
 
 	export let shop: Shop;
@@ -38,11 +39,7 @@
 <MobileMenu {menu} isOpen={isMobileMenuOpen} on:close={handleMobileMenuToggle} />
 
 <header class="relative bg-white">
-	<p
-		class="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
-	>
-		Get free delivery on orders over $100
-	</p>
+	<AnnouncementBar>Get free delivery on orders over 100 €</AnnouncementBar>
 	<nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="border-b border-gray-200">
 			<div class="flex h-16 items-center">
