@@ -2,36 +2,18 @@
 	import type { Menu, Shop, Cart as TCart } from '$lib/types';
 	import AnnouncementBar from '../announcement-bar.svelte';
 	import CartDrawer from '../cart/cart-drawer.svelte';
+	import Search from '../search/search.svelte';
 	import MobileMenu from './mobile-menu.svelte';
 
 	export let shop: Shop;
 	export let menu: Menu;
 	export let cart: TCart | null;
 
-	// let searchValue = '';
-	// let searchResults: Pick<Product, 'id' | 'title' | 'featuredImage'>[] = [];
 	let isMobileMenuOpen = false;
 	let isCartOpen = false;
+	let isSearchOpen = true;
 
 	$: cartQuantity = cart?.lines.edges.reduce((acc, { node }) => acc + node.quantity, 0);
-
-	// const handleSearch = async () => {
-	// 	if (!searchValue) {
-	// 		searchResults = [];
-
-	// 		return;
-	// 	}
-
-	// 	const { search } = await Search.getProducts({ query: searchValue, first: 3 });
-
-	// 	searchResults = search.edges.map(({ node }) => node);
-	// };
-
-	// const handleBlur = () => {
-	// 	setTimeout(() => {
-	// 		searchResults = [];
-	// 	}, 200);
-	// };
 
 	const handleMobileMenuToggle = () => {
 		isMobileMenuOpen = !isMobileMenuOpen;
@@ -40,12 +22,20 @@
 	const handleCartToggle = () => {
 		isCartOpen = !isCartOpen;
 	};
+
+	const handleSearchToggle = () => {
+		isSearchOpen = !isSearchOpen;
+	};
 </script>
 
 <MobileMenu {menu} isOpen={isMobileMenuOpen} on:close={handleMobileMenuToggle} />
 
 {#if cart}
 	<CartDrawer {cart} isOpen={isCartOpen} on:close={handleCartToggle} />
+{/if}
+
+{#if isSearchOpen}
+	<Search isOpen={isSearchOpen} on:close={handleSearchToggle} />
 {/if}
 
 <header class="relative bg-white">
@@ -116,7 +106,7 @@
 						</a>
 					</div>
 					<div class="flex lg:ml-6">
-						<a href="/" class="p-2 text-gray-400 hover:text-gray-500">
+						<button on:click={handleSearchToggle} class="p-2 text-gray-400 hover:text-gray-500">
 							<span class="sr-only">Search</span>
 							<svg
 								class="h-6 w-6"
@@ -132,7 +122,7 @@
 									d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
 								/>
 							</svg>
-						</a>
+						</button>
 					</div>
 					{#if cartQuantity !== null}
 						<div class="ml-4 flow-root lg:ml-6">

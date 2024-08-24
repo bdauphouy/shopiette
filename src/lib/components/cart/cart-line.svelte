@@ -10,8 +10,6 @@
 	const handleNavigate = () => dispatch('navigate');
 
 	const handleRemove = () => dispatch('remove');
-
-	console.log(line);
 </script>
 
 <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
