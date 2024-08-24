@@ -11,7 +11,7 @@
 
 	let isMobileMenuOpen = false;
 	let isCartOpen = false;
-	let isSearchOpen = true;
+	let isSearchOpen = false;
 
 	$: cartQuantity = cart?.lines.edges.reduce((acc, { node }) => acc + node.quantity, 0);
 
