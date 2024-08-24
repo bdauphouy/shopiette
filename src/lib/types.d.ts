@@ -9,13 +9,16 @@ export type Cart = {
 			node: {
 				id: string;
 				quantity: number;
+				cost: {
+					totalAmount: Price;
+				};
 				merchandise: {
 					availableForSale: boolean;
 					compareAtPrice: Price | null;
 					id: string;
 					image: Image;
 					price: Price;
-					product: Product;
+					product: Omit<Product, 'variants'>;
 					selectedOptions: {
 						name: string;
 						value: string;

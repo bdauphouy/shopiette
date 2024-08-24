@@ -12,6 +12,11 @@ query CartGet($id: ID!) {
 				node {
 					id
 					quantity
+					cost {
+						totalAmount {
+							amount
+						}
+					}
 					merchandise {
 						... on ProductVariant {
 							id
@@ -53,42 +58,6 @@ query CartGet($id: ID!) {
 										node {
 											originalSrc
 											altText
-										}
-									}
-								}
-								variants(first: 10) {
-									edges {
-										node {
-											id
-											title
-											compareAtPrice {
-												amount
-											}
-											price {
-												amount
-											}
-											availableForSale
-											selectedOptions {
-												name
-												value
-											}
-											image {
-												originalSrc
-												altText
-											}
-											product {
-												id
-												title
-												description
-												images(first: 10) {
-													edges {
-														node {
-															originalSrc
-															altText
-														}
-													}
-												}
-											}
 										}
 									}
 								}

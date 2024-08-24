@@ -12,8 +12,8 @@
 	<header class="flex items-center justify-between">
 		<h2 class="text-2xl font-bold tracking-tight text-gray-900">{title}</h2>
 		{#if viewAllLink}
-			<a href={viewAllLink} class="text-sm font-medium text-gray-700 hover:text-gray-800">
-				See more
+			<a href={viewAllLink} class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+				See more &RightArrow;
 			</a>
 		{/if}
 	</header>

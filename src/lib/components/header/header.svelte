@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Menu, Shop, Cart as TCart } from '$lib/types';
 	import AnnouncementBar from '../announcement-bar.svelte';
+	import CartDrawer from '../cart/cart-drawer.svelte';
 	import MobileMenu from './mobile-menu.svelte';
 
 	export let shop: Shop;
@@ -10,6 +11,7 @@
 	// let searchValue = '';
 	// let searchResults: Pick<Product, 'id' | 'title' | 'featuredImage'>[] = [];
 	let isMobileMenuOpen = false;
+	let isCartOpen = false;
 
 	$: cartQuantity = cart?.lines.edges.reduce((acc, { node }) => acc + node.quantity, 0);
 
@@ -34,9 +36,17 @@
 	const handleMobileMenuToggle = () => {
 		isMobileMenuOpen = !isMobileMenuOpen;
 	};
+
+	const handleCartToggle = () => {
+		isCartOpen = !isCartOpen;
+	};
 </script>
 
 <MobileMenu {menu} isOpen={isMobileMenuOpen} on:close={handleMobileMenuToggle} />
+
+{#if cart}
+	<CartDrawer {cart} isOpen={isCartOpen} on:close={handleCartToggle} />
+{/if}
 
 <header class="relative bg-white">
 	<AnnouncementBar>Get free delivery on orders over 100 €</AnnouncementBar>
@@ -126,7 +136,7 @@
 					</div>
 					{#if cartQuantity !== null}
 						<div class="ml-4 flow-root lg:ml-6">
-							<a href="/cart" class="group -m-2 flex items-center p-2">
+							<button on:click={handleCartToggle} class="group -m-2 flex items-center p-2">
 								<svg
 									class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
 									fill="none"
@@ -145,7 +155,7 @@
 									{cartQuantity}
 								</span>
 								<span class="sr-only">items in cart, view bag</span>
-							</a>
+							</button>
 						</div>
 					{/if}
 				</div>

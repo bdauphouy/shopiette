@@ -11,7 +11,7 @@
 	let cartErrors: UserError[] = [];
 	let quantity = 1;
 
-	const variantsOptions = data.product.variants.edges
+	$: variantsOptions = data.product.variants.edges
 		.map(({ node }) => node.selectedOptions)
 		.reduce<{ name: string; options: string[] }[]>((accumulator, options) => {
 			options.forEach(({ name, value }) => {
@@ -29,11 +29,11 @@
 			return accumulator;
 		}, []);
 
-	let currentOptions = variantsOptions.map((variant) => variant.options[0]);
+	$: currentOptions = data.product.variants.edges[0].node.selectedOptions.map(({ value }) => value);
 
-	$: currentVariant = data.product.variants.edges.find(({ node }) =>
-		node.selectedOptions.every(({ value }) => currentOptions.find((option) => option === value))
-	)!.node;
+	$: currentVariant = data.product.variants.edges.find(({ node }) => {
+		return node.selectedOptions.every(({ value }) => currentOptions.includes(value));
+	})!.node;
 
 	const handleOptionClick = (option: string, i: number) => {
 		currentOptions[i] = option;
