@@ -11,7 +11,7 @@
 <div>
 	<header class="flex items-center justify-between">
 		<h2 class="text-2xl font-bold tracking-tight text-gray-900">{title}</h2>
-		{#if viewAllLink}
+		{#if viewAllLink && products.length > 0}
 			<a href={viewAllLink} class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
 				See more &RightArrow;
 			</a>
