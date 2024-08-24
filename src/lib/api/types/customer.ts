@@ -42,7 +42,7 @@ export interface CustomerCreateData {
 
 export interface CustomerLoginData {
 	customerAccessTokenCreate: {
-		customerAccessToken: {
+		customerAccessToken?: {
 			accessToken: string;
 		};
 		customerUserErrors: UserError[];

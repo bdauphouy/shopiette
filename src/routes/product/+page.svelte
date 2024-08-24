@@ -129,7 +129,7 @@
 					Add to cart
 				</button>
 				{#if cartErrors.length > 0}
-					<ul class="text-md text-red-500 flex flex-col gap-2 mt-4">
+					<ul class="text-sm text-red-500 flex flex-col gap-2 mt-4">
 						{#each cartErrors as error}
 							<li class="text-sm font-medium text-red-500">{error.message}</li>
 						{/each}
