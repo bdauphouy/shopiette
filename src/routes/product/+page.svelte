@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { Cart } from '$lib/api';
-	import Tag from '$lib/components/tag.svelte';
+	import Badge from '$lib/components/badge.svelte';
 	import type { UserError } from '$lib/types';
 	import { formatPrice } from '$lib/utils';
 	import type { PageData } from './$types';
@@ -86,14 +86,14 @@
 					<span class="text-md font-medium text-gray-400 line-through">
 						{formatPrice(currentVariant.compareAtPrice.amount)}
 					</span>
-					<Tag>Sale</Tag>
+					<Badge>Sale</Badge>
 				{/if}
 			</div>
 			<div class="mt-4">
 				{#if currentVariant.availableForSale}
-					<Tag>In stock</Tag>
+					<Badge status="success">In stock</Badge>
 				{:else}
-					<Tag status="error">Out of stock</Tag>
+					<Badge status="error">Out of stock</Badge>
 				{/if}
 			</div>
 			<form on:submit={handleAddToCart} class="mt-10">
