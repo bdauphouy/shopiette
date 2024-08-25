@@ -138,7 +138,7 @@
 							</svg>
 						</button>
 					</div>
-					{#if cartQuantity !== null}
+					{#if cartQuantity !== undefined}
 						<div class="ml-4 flow-root lg:ml-6">
 							<button on:click={handleCartToggle} class="group -m-2 flex items-center p-2">
 								<svg
